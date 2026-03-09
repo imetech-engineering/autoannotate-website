@@ -409,8 +409,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const key1 = (document.getElementById('access_key_imetech')?.value || '').trim();
         const key2 = (document.getElementById('access_key_r2r')?.value || '').trim();
 
-        if (!key1 || !key2) {
-            formMessage.textContent = 'Formulier is nog niet geconfigureerd. Voeg Web3Forms access keys toe (zie instructies).';
+        if (!key1) {
+            formMessage.textContent = 'Formulier is nog niet geconfigureerd. Voeg ten minste de IMeTech Web3Forms access key toe (zie instructies).';
             formMessage.className = 'form-message error';
             return;
         }
@@ -436,33 +436,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         try {
-            const [resImetech, resR2r] = await Promise.all([
+            const requests = [
                 fetch(WEB3FORMS_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(buildPayload(key1))
-                }),
-                fetch(WEB3FORMS_URL, {
+                })
+            ];
+            if (key2) {
+                requests.push(fetch(WEB3FORMS_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(buildPayload(key2))
-                })
-            ]);
+                }));
+            }
 
-            const okImetech = resImetech.ok;
-            const okR2r = resR2r.ok;
-            const jsonImetech = okImetech ? await resImetech.json().catch(() => ({})) : {};
-            const jsonR2r = okR2r ? await resR2r.json().catch(() => ({})) : {};
+            const responses = await Promise.all(requests);
+            const results = await Promise.all(responses.map(r => r.ok ? r.json().catch(() => ({})) : Promise.resolve({ success: false })));
+            const allOk = responses.every(r => r.ok) && results.every(j => j.success !== false);
+            const bothConfigured = !!key2;
 
-            if (okImetech && okR2r && (jsonImetech.success !== false) && (jsonR2r.success !== false)) {
-                formMessage.innerHTML = '<svg class="icon-emoji" viewBox="0 0 24 24" style="margin-right: 0.3rem; stroke: #c8e6c9;"><polyline points="20 6 9 17 4 12"/></svg> Bedankt! Uw bericht is verstuurd naar beide partners. We nemen snel contact op.';
+            if (allOk) {
+                formMessage.innerHTML = '<svg class="icon-emoji" viewBox="0 0 24 24" style="margin-right: 0.3rem; stroke: #c8e6c9;"><polyline points="20 6 9 17 4 12"/></svg> Bedankt! Uw bericht is verstuurd. We nemen snel contact op.';
                 formMessage.className = 'form-message success';
                 submitBtn.innerHTML = 'Verstuurd! <svg class="icon-emoji" viewBox="0 0 24 24" style="margin-right: 0; margin-left: 0.3rem; stroke: currentColor;"><polyline points="20 6 9 17 4 12"/></svg>';
                 contactForm.reset();
             } else {
-                const msg = !okImetech && !okR2r ? 'Verzenden mislukt. Controleer uw internetverbinding of probeer het later opnieuw.'
-                    : (!okImetech || !okR2r) ? 'Bericht is naar één adres verstuurd; het andere adres kon niet worden bereikt.'
-                    : (jsonImetech.message || jsonR2r.message || 'Er is iets misgegaan.');
+                const anyOk = responses.some(r => r.ok);
+                const msg = !anyOk ? 'Verzenden mislukt. Controleer uw internetverbinding of probeer het later opnieuw.'
+                    : (bothConfigured && responses.some(r => !r.ok)) ? 'Bericht is naar één adres verstuurd; het andere adres kon niet worden bereikt.'
+                    : (results[0]?.message || 'Er is iets misgegaan.');
                 formMessage.textContent = msg;
                 formMessage.className = 'form-message error';
                 submitBtn.innerHTML = originalBtnHtml;
