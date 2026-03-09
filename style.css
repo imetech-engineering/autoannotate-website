@@ -1,5 +1,5 @@
 /* ========================================
-   AutoAnnotate.ai – Design System & Styles
+   AutoAnnotate – Design System & Styles
    ======================================== */
 
 /* ---------- CSS Custom Properties ---------- */
@@ -1300,25 +1300,25 @@ section {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* ---------- GSAP Reveal Utilities ---------- */
+/* ---------- GSAP Reveal Utilities (smooth scroll-in, no sudden pop) ---------- */
 .reveal {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(28px);
 }
 
 .reveal-left {
     opacity: 0;
-    transform: translateX(-40px);
+    transform: translateX(-28px);
 }
 
 .reveal-right {
     opacity: 0;
-    transform: translateX(40px);
+    transform: translateX(28px);
 }
 
 .reveal-scale {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.94);
 }
 
 /* ---------- RESPONSIVE ---------- */

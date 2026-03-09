@@ -1,6 +1,8 @@
-# AutoAnnotate.ai – Label Sensor-Data 10x Faster
+# AutoAnnotate – Label Sensor-Data 100x Faster
 
-AutoAnnotate.ai is an automated sensor-data labeling platform designed to transform raw data into AI-ready datasets for robots, healthcare, and retail. By leveraging AI Vision, it automates the tedious process of manual annotation, making it 10x faster and significantly more accurate.
+**Website:** [autoannotate.nl](https://autoannotate.nl)
+
+AutoAnnotate is an automated sensor-data labeling platform designed to transform raw data into AI-ready datasets for robots, healthcare, and retail. By leveraging AI Vision, it automates the tedious process of manual annotation, making it 100x faster and significantly more accurate.
 
 ## 🚀 Key Features
 
@@ -29,9 +31,31 @@ cd auto-annotate-website
 
 No build step or server is required for development, though using a live-server (like the VS Code Live Server extension) is recommended for the best experience.
 
+## 📧 Contact form setup (manual)
+
+The contact form sends submissions to both partners via [Web3Forms](https://web3forms.com/) (free, no ads for end users). Recipient addresses are configured only in Web3Forms (never in this repo) to avoid exposing them to scrapers. You need to add two access keys once:
+
+1. **Create two Web3Forms access keys**
+   - Go to [https://app.web3forms.com/](https://app.web3forms.com/)
+   - Sign up or log in and verify your email.
+   - Create a form and get an **Access Key** for the IMeTech contact inbox (use that address when creating the form in Web3Forms).
+   - Create a second form, or use a second account, and get an **Access Key** for the R2R contact inbox.
+
+2. **Put the keys in the website**
+   - Open `index.html` and find the contact form (around the “Neem Contact Op” section).
+   - You’ll see two hidden inputs:
+     - `id="access_key_imetech"` → set `value="YOUR_IMETECH_ACCESS_KEY"`
+     - `id="access_key_r2r"` → set `value="YOUR_R2R_ACCESS_KEY"`
+   - Replace the placeholder values with the two keys from step 1 (one key per email).
+
+3. **Test**
+   - Publish the site and submit the form. Both inboxes should receive the same submission. Emails use subject **"AutoAnnotate – Contactform"** and the message body starts with **[AutoAnnotate]** so you can filter them.
+
+If you only have one key, you can leave one input empty; the form will then only send to the address linked to the key you filled in (and show a message that the form is not fully configured if both are empty).
+
 ## 🤝 Partners & Credits
 
-AutoAnnotate.ai is an initiative by:
+AutoAnnotate is an initiative by:
 - **[R2R Engineering](https://r2r.nl)**
 - **[IMeTech Engineering](https://imetech.nl)**
 

@@ -1,5 +1,5 @@
 /* ========================================
-   AutoAnnotate.ai – Main JavaScript
+   AutoAnnotate – Main JavaScript
    GSAP Parallax, Typewriter, Counters,
    Particles, Slider, Form, Nav
    ======================================== */
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ──────────── TYPEWRITER EFFECT ────────────
     const typewriterEl = document.getElementById('typewriter-text');
-    const fullText = 'Van ruwe data naar AI-klaar datasets voor robots, zorg & retail.';
+    const fullText = 'Slimme systemen hebben gelabelde data nodig. Wij doen dat automatisch.';
     let charIndex = 0;
 
     function typeWriter() {
@@ -150,16 +150,20 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.registerPlugin(ScrollTrigger);
 
 
-        // Generic reveal animations
+        // Reveal animations: smooth, even motion (no slow-then-sudden-fast)
+        const revealEase = 'power1.out';
+        const revealDuration = 1;
+        const revealStart = 'top 88%';
+
         gsap.utils.toArray('.reveal').forEach(el => {
             gsap.to(el, {
                 opacity: 1,
                 y: 0,
-                duration: 0.8,
-                ease: 'power2.out',
+                duration: revealDuration,
+                ease: revealEase,
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 85%',
+                    start: revealStart,
                     once: true
                 },
                 delay: parseFloat(el.dataset.delay || 0)
@@ -170,11 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(el, {
                 opacity: 1,
                 x: 0,
-                duration: 0.8,
-                ease: 'power2.out',
+                duration: revealDuration,
+                ease: revealEase,
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 85%',
+                    start: revealStart,
                     once: true
                 }
             });
@@ -184,11 +188,11 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(el, {
                 opacity: 1,
                 x: 0,
-                duration: 0.8,
-                ease: 'power2.out',
+                duration: revealDuration,
+                ease: revealEase,
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 85%',
+                    start: revealStart,
                     once: true
                 }
             });
@@ -198,11 +202,11 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(el, {
                 opacity: 1,
                 scale: 1,
-                duration: 1,
-                ease: 'power2.out',
+                duration: 1.1,
+                ease: revealEase,
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 85%',
+                    start: revealStart,
                     once: true
                 }
             });
@@ -213,30 +217,28 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(el, {
                 opacity: 1,
                 x: 0,
-                duration: 0.6,
-                ease: 'power2.out',
-                delay: i * 0.15,
+                duration: 0.85,
+                ease: revealEase,
+                delay: i * 0.12,
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 85%',
+                    start: revealStart,
                     once: true
                 }
             });
         });
-
-
 
         // Step cards stagger
         gsap.utils.toArray('.step-card').forEach((card, i) => {
             gsap.to(card, {
                 opacity: 1,
                 y: 0,
-                duration: 0.6,
-                ease: 'back.out(1.2)',
-                delay: i * 0.12,
+                duration: 0.85,
+                ease: revealEase,
+                delay: i * 0.1,
                 scrollTrigger: {
                     trigger: card,
-                    start: 'top 88%',
+                    start: revealStart,
                     once: true
                 }
             });
@@ -247,12 +249,12 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(card, {
                 opacity: 1,
                 y: 0,
-                duration: 0.7,
-                ease: 'power2.out',
-                delay: i * 0.15,
+                duration: 0.9,
+                ease: revealEase,
+                delay: i * 0.12,
                 scrollTrigger: {
                     trigger: card,
-                    start: 'top 85%',
+                    start: revealStart,
                     once: true
                 }
             });
@@ -263,12 +265,12 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(card, {
                 opacity: 1,
                 y: 0,
-                duration: 0.6,
-                ease: 'power2.out',
-                delay: i * 0.12,
+                duration: 0.85,
+                ease: revealEase,
+                delay: i * 0.1,
                 scrollTrigger: {
                     trigger: card,
-                    start: 'top 88%',
+                    start: revealStart,
                     once: true
                 }
             });
@@ -279,11 +281,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const width = bar.dataset.width;
             gsap.to(bar, {
                 width: width + '%',
-                duration: 1.5,
-                ease: 'power2.out',
+                duration: 1.2,
+                ease: revealEase,
                 scrollTrigger: {
                     trigger: bar,
-                    start: 'top 90%',
+                    start: revealStart,
                     once: true
                 }
             });
@@ -359,43 +361,127 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Touch/swipe: swipe left = next, swipe right = previous
+    const testimonialSlider = document.getElementById('testimonial-slider');
+    if (testimonialSlider && slides.length > 0) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const minSwipeDistance = 50;
+
+        testimonialSlider.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        testimonialSlider.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) < minSwipeDistance) return;
+            clearInterval(sliderInterval);
+            if (diff > 0) {
+                goToSlide((currentSlide + 1) % slides.length);
+            } else {
+                goToSlide((currentSlide - 1 + slides.length) % slides.length);
+            }
+            sliderInterval = setInterval(nextSlide, 5000);
+        }, { passive: true });
+    }
+
     sliderInterval = setInterval(nextSlide, 5000);
 
-    // ──────────── CONTACT FORM ────────────
+    // ──────────── CONTACT FORM (Web3Forms, dual delivery) ────────────
     const contactForm = document.getElementById('contact-form');
     const formMessage = document.getElementById('form-message');
+    const WEB3FORMS_URL = 'https://api.web3forms.com/submit';
+    const FORM_SOURCE_PREFIX = '[AutoAnnotate] ';
 
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const formData = new FormData(contactForm);
         const data = Object.fromEntries(formData.entries());
 
-        // Validate
         if (!data.naam || !data.email) {
             formMessage.textContent = 'Vul alstublieft alle verplichte velden in.';
             formMessage.className = 'form-message error';
             return;
         }
 
-        // Simulate AJAX send (replace with real endpoint)
+        const key1 = (document.getElementById('access_key_imetech')?.value || '').trim();
+        const key2 = (document.getElementById('access_key_r2r')?.value || '').trim();
+
+        if (!key1 || !key2) {
+            formMessage.textContent = 'Formulier is nog niet geconfigureerd. Voeg Web3Forms access keys toe (zie instructies).';
+            formMessage.className = 'form-message error';
+            return;
+        }
+
         const submitBtn = document.getElementById('form-submit');
+        const originalBtnHtml = submitBtn.innerHTML;
         submitBtn.textContent = 'Verzenden...';
         submitBtn.disabled = true;
+        formMessage.textContent = '';
+        formMessage.className = 'form-message';
 
-        setTimeout(() => {
-            formMessage.innerHTML = '<svg class="icon-emoji" viewBox="0 0 24 24" style="margin-right: 0.3rem; stroke: #c8e6c9;"><polyline points="20 6 9 17 4 12"/></svg> Bedankt! Uw bericht is succesvol verstuurd. We nemen snel contact op.';
-            formMessage.className = 'form-message success';
-            submitBtn.innerHTML = 'Verstuurd! <svg class="icon-emoji" viewBox="0 0 24 24" style="margin-right: 0; margin-left: 0.3rem; stroke: currentColor;"><polyline points="20 6 9 17 4 12"/></svg>';
-            submitBtn.disabled = true;
-            contactForm.reset();
+        const rawMessage = (data.bericht || '').trim() || '(Geen bericht)';
+        const messageWithSource = FORM_SOURCE_PREFIX + rawMessage;
 
+        const buildPayload = (accessKey) => ({
+            access_key: accessKey,
+            subject: 'AutoAnnotate – Contactform',
+            name: data.naam,
+            email: data.email,
+            message: messageWithSource,
+            company: (data.bedrijf || '').trim() || '',
+            botcheck: data.botcheck || ''
+        });
+
+        try {
+            const [resImetech, resR2r] = await Promise.all([
+                fetch(WEB3FORMS_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(buildPayload(key1))
+                }),
+                fetch(WEB3FORMS_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(buildPayload(key2))
+                })
+            ]);
+
+            const okImetech = resImetech.ok;
+            const okR2r = resR2r.ok;
+            const jsonImetech = okImetech ? await resImetech.json().catch(() => ({})) : {};
+            const jsonR2r = okR2r ? await resR2r.json().catch(() => ({})) : {};
+
+            if (okImetech && okR2r && (jsonImetech.success !== false) && (jsonR2r.success !== false)) {
+                formMessage.innerHTML = '<svg class="icon-emoji" viewBox="0 0 24 24" style="margin-right: 0.3rem; stroke: #c8e6c9;"><polyline points="20 6 9 17 4 12"/></svg> Bedankt! Uw bericht is verstuurd naar beide partners. We nemen snel contact op.';
+                formMessage.className = 'form-message success';
+                submitBtn.innerHTML = 'Verstuurd! <svg class="icon-emoji" viewBox="0 0 24 24" style="margin-right: 0; margin-left: 0.3rem; stroke: currentColor;"><polyline points="20 6 9 17 4 12"/></svg>';
+                contactForm.reset();
+            } else {
+                const msg = !okImetech && !okR2r ? 'Verzenden mislukt. Controleer uw internetverbinding of probeer het later opnieuw.'
+                    : (!okImetech || !okR2r) ? 'Bericht is naar één adres verstuurd; het andere adres kon niet worden bereikt.'
+                    : (jsonImetech.message || jsonR2r.message || 'Er is iets misgegaan.');
+                formMessage.textContent = msg;
+                formMessage.className = 'form-message error';
+                submitBtn.innerHTML = originalBtnHtml;
+                submitBtn.disabled = false;
+            }
+        } catch (err) {
+            formMessage.textContent = 'Verzenden mislukt. Controleer uw internetverbinding of probeer het later opnieuw.';
+            formMessage.className = 'form-message error';
+            submitBtn.innerHTML = originalBtnHtml;
+            submitBtn.disabled = false;
+        }
+
+        if (formMessage.className.includes('success')) {
             setTimeout(() => {
-                submitBtn.innerHTML = 'Verstuur Bericht <svg class="icon-emoji" viewBox="0 0 24 24" style="margin: 0; margin-left: 0.3rem; stroke: currentColor;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+                submitBtn.innerHTML = originalBtnHtml;
                 submitBtn.disabled = false;
                 formMessage.className = 'form-message';
-            }, 4000);
-        }, 1200);
+            }, 5000);
+        }
     });
 
     // ──────────── SMOOTH SCROLL FOR ANCHOR LINKS ────────────
