@@ -32,9 +32,8 @@
             <ul class="nav-links" id="nav-links">
                 <li><a href="#probleem" data-i18n="nav.probleem">Probleem</a></li>
                 <li><a href="#oplossing" data-i18n="nav.oplossing">Oplossing</a></li>
-                <li><a href="#voordelen" data-i18n="nav.voordelen">Voordelen</a></li>
                 <li><a href="#toepassingen" data-i18n="nav.toepassingen">Toepassingen</a></li>
-                <li><a href="#demo" data-i18n="nav.bewijs">Bewijs</a></li>
+                <li><a href="#team" data-i18n="nav.team">Team</a></li>
                 <li class="nav-lang">
                     <button type="button" class="lang-btn active" data-lang="nl" aria-pressed="true">NL</button>
                     <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
@@ -122,43 +121,63 @@
                 <img src="images/photo-solution.png" alt="" loading="lazy" width="800" height="450" class="oplossing-hero-img">
             </div>
             <div class="steps-flow reveal">
-                <div class="step-card" data-delay="0">
-                    <div class="step-number">1</div>
-                    <h3 data-i18n="solution.s1t">Opnemen</h3>
-                    <p data-i18n="solution.s1b">Wij leveren en installeren de camera's en koppelen ze aan uw sensoren. Beeld en metingen lopen tegelijk op één tijdlijn.</p>
-                </div>
-                <div class="flow-arrow" aria-hidden="true">
-                    <svg viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path class="flow-arrow-line" d="M2 20 C 22 6, 58 34, 76 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-                        <path class="flow-arrow-head" d="M70 12 L80 20 L70 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    </svg>
-                </div>
-                <div class="step-card" data-delay="0.15">
-                    <div class="step-number">2</div>
-                    <h3 data-i18n="solution.s2t">Herkennen</h3>
-                    <p data-i18n="solution.s2b">De software ziet op het beeld wat er gebeurt: mensen, voorwerpen en handelingen.</p>
-                </div>
-                <div class="flow-arrow" aria-hidden="true">
-                    <svg viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path class="flow-arrow-line" d="M2 20 C 22 6, 58 34, 76 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-                        <path class="flow-arrow-head" d="M70 12 L80 20 L70 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    </svg>
-                </div>
-                <div class="step-card" data-delay="0.3">
-                    <div class="step-number">3</div>
-                    <h3 data-i18n="solution.s3t">Koppelen</h3>
-                    <p data-i18n="solution.s3b">Wat er op het beeld gebeurt, wordt automatisch gekoppeld aan de metingen op hetzelfde moment.</p>
-                </div>
-                <div class="flow-arrow" aria-hidden="true">
-                    <svg viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path class="flow-arrow-line" d="M2 20 C 22 6, 58 34, 76 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-                        <path class="flow-arrow-head" d="M70 12 L80 20 L70 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    </svg>
-                </div>
-                <div class="step-card" data-delay="0.45">
-                    <div class="step-number">4</div>
-                    <h3 data-i18n="solution.s4t">Exporteren</h3>
-                    <p data-i18n="solution.s4b">U haalt de gelabelde data uit het systeem in gangbare vormen, klaar om uw systeem te trainen.</p>
+                <div class="steps-flow-wave">
+                    <div class="step-card step-1" data-delay="0">
+                        <div class="step-number">1</div>
+                        <h3 data-i18n="solution.s1t">Opnemen</h3>
+                        <p data-i18n="solution.s1b">Wij leveren en installeren de camera's en koppelen ze aan uw sensoren. Beeld en metingen lopen tegelijk op één tijdlijn.</p>
+                    </div>
+                    <div class="flow-link flow-link-12" aria-hidden="true">
+                        <svg class="flow-svg" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="flowG12" x1="0" y1="0" x2="1" y2="0.15" gradientUnits="objectBoundingBox">
+                                    <stop offset="0%" stop-color="#FFB07A"/><stop offset="100%" stop-color="#FF8C42"/>
+                                </linearGradient>
+                            </defs>
+                            <path class="flow-path-glow" d="M 6 78 C 32 72 68 32 94 22" fill="none" stroke="rgba(255,140,66,0.22)" stroke-width="14" stroke-linecap="round"/>
+                            <path class="flow-path-main" d="M 6 78 C 32 72 68 32 94 22" fill="none" stroke="url(#flowG12)" stroke-width="5" stroke-linecap="round"/>
+                            <path class="flow-path-energy" d="M 6 78 C 32 72 68 32 94 22" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 18"/>
+                        </svg>
+                    </div>
+                    <div class="step-card step-2" data-delay="0.15">
+                        <div class="step-number">2</div>
+                        <h3 data-i18n="solution.s2t">Herkennen</h3>
+                        <p data-i18n="solution.s2b">De software ziet op het beeld wat er gebeurt: mensen, voorwerpen en handelingen.</p>
+                    </div>
+                    <div class="flow-link flow-link-23" aria-hidden="true">
+                        <svg class="flow-svg" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="flowG23" x1="0" y1="0" x2="1" y2="0.85" gradientUnits="objectBoundingBox">
+                                    <stop offset="0%" stop-color="#FF8C42"/><stop offset="100%" stop-color="#E67A30"/>
+                                </linearGradient>
+                            </defs>
+                            <path class="flow-path-glow" d="M 6 18 C 38 22 62 88 94 92" fill="none" stroke="rgba(255,140,66,0.22)" stroke-width="14" stroke-linecap="round"/>
+                            <path class="flow-path-main" d="M 6 18 C 38 22 62 88 94 92" fill="none" stroke="url(#flowG23)" stroke-width="5.5" stroke-linecap="round"/>
+                            <path class="flow-path-energy" d="M 6 18 C 38 22 62 88 94 92" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-dasharray="5 20"/>
+                        </svg>
+                    </div>
+                    <div class="step-card step-3" data-delay="0.3">
+                        <div class="step-number">3</div>
+                        <h3 data-i18n="solution.s3t">Koppelen</h3>
+                        <p data-i18n="solution.s3b">Wat er op het beeld gebeurt, wordt automatisch gekoppeld aan de metingen op hetzelfde moment.</p>
+                    </div>
+                    <div class="flow-link flow-link-34" aria-hidden="true">
+                        <svg class="flow-svg" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="flowG34" x1="0" y1="1" x2="1" y2="0" gradientUnits="objectBoundingBox">
+                                    <stop offset="0%" stop-color="#FF8C42"/><stop offset="100%" stop-color="#FFB07A"/>
+                                </linearGradient>
+                            </defs>
+                            <path class="flow-path-glow" d="M 6 88 C 40 95 60 28 94 26" fill="none" stroke="rgba(255,140,66,0.22)" stroke-width="14" stroke-linecap="round"/>
+                            <path class="flow-path-main" d="M 6 88 C 40 95 60 28 94 26" fill="none" stroke="url(#flowG34)" stroke-width="5" stroke-linecap="round"/>
+                            <path class="flow-path-energy" d="M 6 88 C 40 95 60 28 94 26" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 16"/>
+                        </svg>
+                    </div>
+                    <div class="step-card step-4" data-delay="0.45">
+                        <div class="step-number">4</div>
+                        <h3 data-i18n="solution.s4t">Exporteren</h3>
+                        <p data-i18n="solution.s4b">U haalt de gelabelde data uit het systeem in gangbare vormen, klaar om uw systeem te trainen.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -271,6 +290,35 @@
                             <button class="slider-dot" data-slide="2" aria-label="Testimonial 3"></button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section" id="team">
+        <div class="container">
+            <div class="section-headline team-gsap">
+                <h2 data-i18n="team.title">Het team</h2>
+            </div>
+            <p class="section-intro centered narrow team-gsap" data-i18n="team.intro">AutoAnnotate is een initiatief van R2R Engineering en IMeTech Engineering — twee ingenieurs die productontwikkeling en zorg combineren met hands-on techniek.</p>
+            <div class="team-grid">
+                <div class="team-card team-gsap">
+                    <div class="team-photo-wrap">
+                        <img src="images/Richard_Schaper.jpg" alt="Richard Schaper" loading="eager" decoding="async" width="200" height="200">
+                    </div>
+                    <h3 class="team-name">Richard Schaper</h3>
+                    <p class="team-role" data-i18n="team.richard.role">Eigenaar R2R Engineering</p>
+                    <p class="team-bio" data-i18n="team.richard.bio">Al 25 jaar productontwikkeling en innovatie. Brengt technologie en zorg samen — integere ondernemer met oog voor wat er echt nodig is.</p>
+                    <a href="tel:+31620243494" class="team-phone">+31 6 20243494</a>
+                </div>
+                <div class="team-card team-gsap">
+                    <div class="team-photo-wrap">
+                        <img src="images/Ivo_Mengerink.jpg" alt="Ivo Mengerink" loading="eager" decoding="async" width="200" height="200">
+                    </div>
+                    <h3 class="team-name">Ivo Mengerink</h3>
+                    <p class="team-role" data-i18n="team.ivo.role">Oprichter IMeTech Engineering</p>
+                    <p class="team-bio" data-i18n="team.ivo.bio">Engineer met mechatronica-achtergrond. Zet technische ideeën om in werkende producten — praktisch, doeltreffend en hands-on.</p>
+                    <a href="tel:+31612385439" class="team-phone">+31 6 12385439</a>
                 </div>
             </div>
         </div>

@@ -25,15 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
             { name: 'SmartRobot Solutions', logo: 'images/smartrobot.solutions.png', alt: 'SmartRobot Solutions' },
             { name: 'Avoord', logo: 'images/Avoord.webp', alt: 'Avoord' }
         ];
-        function shuffleArray(arr) {
-            const a = arr.slice();
-            for (let i = a.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [a[i], a[j]] = [a[j], a[i]];
-            }
-            return a;
-        }
-        const shuffled = shuffleArray(partners);
+        /* Vaste volgorde (geen shuffle): voorkomt verschillende marquee-lengte/perceptie na F5 */
+        const ordered = partners.slice().sort((a, b) => a.name.localeCompare(b.name, 'nl'));
         function createLogoEl(p) {
             const div = document.createElement('div');
             div.className = 'trust-logo-link';
@@ -45,8 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
             div.appendChild(img);
             return div;
         }
-        shuffled.forEach(p => trustTrack.appendChild(createLogoEl(p)));
-        shuffled.forEach(p => trustTrack.appendChild(createLogoEl(p)));
+        ordered.forEach(p => trustTrack.appendChild(createLogoEl(p)));
+        ordered.forEach(p => trustTrack.appendChild(createLogoEl(p)));
     }
 
     // ──────────── SCROLL PROGRESS BAR ────────────
@@ -110,7 +103,15 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(el, { opacity: 1, x: 0, duration: 0.85, ease: revealEase, delay: i * 0.12, scrollTrigger: { trigger: el, start: revealStart, once: true } });
         });
         gsap.utils.toArray('.step-card').forEach((card, i) => {
-            gsap.to(card, { opacity: 1, y: 0, duration: 0.85, ease: revealEase, delay: i * 0.1, scrollTrigger: { trigger: card, start: revealStart, once: true } });
+            const inWave = card.closest('.steps-flow-wave');
+            gsap.to(card, {
+                opacity: 1,
+                ...(inWave ? {} : { y: 0 }),
+                duration: 0.85,
+                ease: revealEase,
+                delay: i * 0.1,
+                scrollTrigger: { trigger: card, start: revealStart, once: true }
+            });
         });
         gsap.utils.toArray('.compare-card').forEach((card, i) => {
             gsap.to(card, { opacity: 1, y: 0, duration: 0.9, ease: revealEase, delay: i * 0.12, scrollTrigger: { trigger: card, start: revealStart, once: true } });
@@ -121,6 +122,28 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.utils.toArray('.progress-fill').forEach(bar => {
             const width = bar.dataset.width;
             gsap.to(bar, { width: width + '%', duration: 1.2, ease: revealEase, scrollTrigger: { trigger: bar, start: revealStart, once: true } });
+        });
+
+        /* Team: één trigger + vaste duur/stagger (geen aparte ScrollTrigger per kaart, geen wissel door lazy layout) */
+        const teamRoot = document.querySelector('.team-section');
+        if (teamRoot) {
+            const teamEls = teamRoot.querySelectorAll('.team-gsap');
+            gsap.to(teamEls, {
+                opacity: 1,
+                y: 0,
+                duration: 0.48,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: teamRoot,
+                    start: 'top 86%',
+                    once: true
+                }
+            });
+        }
+
+        window.addEventListener('load', () => {
+            ScrollTrigger.refresh();
         });
     }
 

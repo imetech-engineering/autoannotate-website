@@ -651,6 +651,10 @@ section {
         gap: 2.5rem;
     }
 
+    .flow-path-energy {
+        animation: none;
+    }
+
     .hero-trust .trust-logo-link:hover img {
         transform: none;
     }
@@ -869,43 +873,92 @@ section {
     margin: 0;
 }
 
-/* Steps flow: 4 stappen met vloeiende pijlen ertussen */
+/* Steps flow: links → rechts, golf in hoogte + vloeiende bezier-pijlen */
 .steps-flow {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0;
     margin-top: 3rem;
     position: relative;
+    padding: 2.5rem 0 2rem;
 }
 
-.steps-flow .step-card {
-    flex: 1 1 0;
-    min-width: 200px;
-    max-width: 260px;
-}
-
-.steps-flow .flow-arrow {
-    flex-shrink: 0;
+.steps-flow-wave {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    padding: 0 4px;
-    color: var(--primary);
-    opacity: 0.85;
-    transition: color var(--transition), opacity var(--transition);
+    gap: 0;
+    max-width: 1180px;
+    margin: 0 auto;
 }
 
-.steps-flow .flow-arrow svg {
-    width: 56px;
-    height: 28px;
+.steps-flow-wave .step-card {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 240px;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.steps-flow:hover .flow-arrow {
-    opacity: 1;
-    color: var(--primary-dark);
+/* Golf: 1 lager, 2 hoger, 3 lager (meer dan 1), 4 hoger (anders dan 2) */
+.steps-flow-wave .step-1 { transform: translateY(1.35rem); }
+.steps-flow-wave .step-2 { transform: translateY(-1.65rem); }
+.steps-flow-wave .step-3 { transform: translateY(2.4rem); }
+.steps-flow-wave .step-4 { transform: translateY(-0.85rem); }
+
+.steps-flow-wave .step-1:hover { transform: translateY(calc(1.35rem - 8px)); }
+.steps-flow-wave .step-2:hover { transform: translateY(calc(-1.65rem - 8px)); }
+.steps-flow-wave .step-3:hover { transform: translateY(calc(2.4rem - 8px)); }
+.steps-flow-wave .step-4:hover { transform: translateY(calc(-0.85rem - 8px)); }
+
+/* Ruimte tussen kaarten: vloeiende curve vult dit vak */
+.flow-link {
+    flex: 0 1 72px;
+    width: 72px;
+    min-width: 40px;
+    height: 140px;
+    align-self: center;
+    position: relative;
+    z-index: 1;
+    margin: 0 -0.25rem;
+    pointer-events: none;
+}
+
+.flow-link .flow-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    filter: drop-shadow(0 2px 8px rgba(255, 140, 66, 0.25));
+}
+
+.flow-path-main {
+    transition: stroke-width 0.35s ease;
+}
+
+.flow-path-energy {
+    stroke-dashoffset: 0;
+    animation: flow-energy 2.8s linear infinite;
+}
+
+.steps-flow:hover .flow-path-energy {
+    animation-duration: 1.6s;
+}
+
+@keyframes flow-energy {
+    to { stroke-dashoffset: -48; }
+}
+
+.steps-flow:hover .flow-path-main {
+    stroke-width: 6px;
+}
+
+@media (min-width: 1100px) {
+    .flow-link {
+        flex: 0 1 92px;
+        width: 92px;
+        height: 155px;
+    }
 }
 
 .step-card {
@@ -914,15 +967,33 @@ section {
     background: var(--bg-warm);
     border-radius: var(--radius);
     border: 2px solid transparent;
-    transition: box-shadow var(--transition), border-color var(--transition);
+    transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition);
     cursor: default;
     position: relative;
+    overflow: hidden;
+}
+
+.step-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 140, 66, 0.06) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
 }
 
 .step-card:hover {
     border-color: var(--primary);
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     box-shadow: var(--shadow-orange);
+}
+
+.step-card:hover::after {
+    opacity: 1;
 }
 
 .step-number {
@@ -1189,6 +1260,111 @@ section {
     color: var(--text-light);
     font-size: 0.95rem;
     line-height: 1.6;
+}
+
+/* ---------- TEAM SECTION ---------- */
+.team-section {
+    background: var(--white);
+    /* Witte band t.o.v. demo (warm + patroon) erboven en CTA eronder */
+}
+
+/* Startstaat voor vaste GSAP-timeline (geen per-kaart ScrollTrigger) */
+.team-section .team-gsap {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.team-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 2px solid transparent;
+    transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition);
+    overflow: hidden;
+    position: relative;
+}
+
+.team-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 140, 66, 0.06) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.team-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-orange);
+}
+
+.team-card:hover::after {
+    opacity: 1;
+}
+
+.team-photo-wrap {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.25rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--primary-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.team-photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team-name {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.team-role {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.team-bio {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+}
+
+.team-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.team-phone:hover {
+    color: var(--primary-dark);
 }
 
 /* ---------- DEMO / PROOF SECTION ---------- */
@@ -1610,29 +1786,30 @@ section {
 
 /* Tablet */
 @media (max-width: 1024px) {
-    .steps-flow {
-        flex-direction: column;
-        align-items: center;
-        max-width: 400px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .steps-flow .step-card {
+    .steps-flow-wave {
         max-width: 100%;
-        min-width: 0;
     }
 
-    .steps-flow .flow-arrow {
-        transform: rotate(90deg);
-        width: 40px;
-        padding: 8px 0;
+    .steps-flow-wave .step-card {
+        max-width: 200px;
     }
 
-    .steps-flow .flow-arrow svg {
-        width: 40px;
-        height: 28px;
+    .flow-link {
+        flex: 0 1 48px;
+        width: 48px;
+        min-width: 28px;
+        height: 120px;
     }
+
+    .steps-flow-wave .step-1 { transform: translateY(1rem); }
+    .steps-flow-wave .step-2 { transform: translateY(-1.25rem); }
+    .steps-flow-wave .step-3 { transform: translateY(1.85rem); }
+    .steps-flow-wave .step-4 { transform: translateY(-0.65rem); }
+
+    .steps-flow-wave .step-1:hover { transform: translateY(calc(1rem - 8px)); }
+    .steps-flow-wave .step-2:hover { transform: translateY(calc(-1.25rem - 8px)); }
+    .steps-flow-wave .step-3:hover { transform: translateY(calc(1.85rem - 8px)); }
+    .steps-flow-wave .step-4:hover { transform: translateY(calc(-0.65rem - 8px)); }
 
     .compare-grid {
         grid-template-columns: 1fr;
@@ -1665,6 +1842,11 @@ section {
         mask-image: none;
         -webkit-mask-image: none;
         border-radius: 0;
+    }
+
+    .trust-marquee-track {
+        gap: 1.5rem;
+        padding: 0 1rem;
     }
 
     .nav-links {
@@ -1709,11 +1891,82 @@ section {
     }
 
     .steps-flow {
+        padding: 1.5rem 0 1rem;
+        overflow: visible;
+    }
+
+    .steps-flow-wave {
+        flex-direction: column;
+        align-items: stretch;
         max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        gap: 0;
+        overflow: visible;
+    }
+
+    /* flex:1 1 0 + overflow:hidden op .step-card laat flex-items tot ~0 hoogte krimpen (mobiel) */
+    .steps-flow-wave .step-card {
+        flex: 0 0 auto;
+        min-width: 0;
+        min-height: min-content;
+        max-width: 100%;
+        width: 100%;
+        overflow: visible;
+    }
+
+    /* Mobiel: rechte kolom, geen zigzag – nette stap 1 → 2 → 3 → 4 */
+    .steps-flow-wave .step-1,
+    .steps-flow-wave .step-2,
+    .steps-flow-wave .step-3,
+    .steps-flow-wave .step-4 {
+        transform: none;
+    }
+
+    .steps-flow-wave .step-1:hover,
+    .steps-flow-wave .step-2:hover,
+    .steps-flow-wave .step-3:hover,
+    .steps-flow-wave .step-4:hover {
+        transform: translateY(-6px);
+    }
+
+    /* Pijlen als kleine verticale verbindingen (na 90° draai: smalle strook) */
+    .flow-link {
+        width: 44px;
+        height: 36px;
+        flex: 0 0 auto;
+        margin: 0.5rem auto;
+        transform: rotate(90deg);
+        align-self: center;
+    }
+
+    .flow-link .flow-svg {
+        width: 100%;
+        height: 100%;
     }
 
     .masonry-grid {
         grid-template-columns: 1fr;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        gap: 0.4rem;
+    }
+
+    .team-section .team-card {
+        padding: 1.1rem 1rem;
+    }
+
+    .team-section .team-photo-wrap {
+        width: 92px;
+        height: 92px;
+        margin-bottom: 0.75rem;
+    }
+
+    .team-section .team-bio {
+        margin-bottom: 0.65rem;
     }
 
     .demo-grid {

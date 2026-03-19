@@ -18,9 +18,11 @@
             'nav.oplossing': 'Oplossing',
             'nav.voordelen': 'Voordelen',
             'nav.toepassingen': 'Toepassingen',
+            'nav.team': 'Team',
             'nav.privacy': 'Privacy',
             'nav.bewijs': 'Bewijs',
             'nav.demoCta': 'Demo Aanvragen',
+            'nav.contact': 'Contact',
 
             'product.blockTitle': 'Wat AutoAnnotate doet',
             'product.lead': 'U hebt sensoren in een machine, robot of gebouw en wilt dat een slim systeem ervan leert. Daarvoor hebt u voorbeelden nodig: bij elk moment moet duidelijk zijn wat er gebeurde. Zonder die duidelijkheid leert het systeem niet. Zelf urenlang video zoeken en metingen erbij zoeken kost weken. AutoAnnotate levert de camera\'s: we zetten ze goed neer, nemen beeld en metingen tegelijk op en koppelen wat u op het beeld ziet aan uw sensoren. Zo krijgt u een nette verzameling voorbeelden die u kunt gebruiken om uw systeem te trainen.',
@@ -155,6 +157,13 @@
             'quote3': 'Wat maanden kostte, deden we in weken — met minder discussie over labels.',
             'cite3': '— Ontwikkelteam Maatje Pop',
 
+            'team.title': 'Het team',
+            'team.intro': 'AutoAnnotate is een initiatief van R2R Engineering en IMeTech Engineering — twee ingenieurs die productontwikkeling en zorg combineren met hands-on techniek.',
+            'team.richard.role': 'Eigenaar R2R Engineering',
+            'team.richard.bio': 'Al 25 jaar productontwikkeling en innovatie. Brengt technologie en zorg samen — integere ondernemer met oog voor wat er echt nodig is.',
+            'team.ivo.role': 'Oprichter IMeTech Engineering',
+            'team.ivo.bio': 'Engineer met mechatronica-achtergrond. Zet technische ideeën om in werkende producten — praktisch, doeltreffend en hands-on.',
+
             'cta.title': 'Klaar om sneller te labelen?',
             'cta.p': 'Plan een gratis demo en ontdek hoe AutoAnnotate u sneller vooruithelpt met uw data.',
             'cta.btn': 'Plan demo',
@@ -193,9 +202,11 @@
             'nav.oplossing': 'Solution',
             'nav.voordelen': 'Benefits',
             'nav.toepassingen': 'Applications',
+            'nav.team': 'Team',
             'nav.privacy': 'Privacy',
             'nav.bewijs': 'Proof',
             'nav.demoCta': 'Request Demo',
+            'nav.contact': 'Contact',
 
             'product.blockTitle': 'What AutoAnnotate does',
             'product.lead': 'You have sensors in a machine, robot, or building and want a smart system to learn from them. You need examples: at each moment it should be clear what happened. Without that clarity, the system cannot learn. Manually matching hours of video to readings takes weeks. AutoAnnotate supplies the cameras: we set them up, record video and readings together, and automatically link what you see to your sensors. You get a clean set of examples ready for training.',
@@ -329,6 +340,13 @@
             'cite2': '— R2R Engineering',
             'quote3': 'What took months we did in weeks — with less debate over labels.',
             'cite3': '— Maatje Pop dev team',
+
+            'team.title': 'The team',
+            'team.intro': 'AutoAnnotate is an initiative of R2R Engineering and IMeTech Engineering — two engineers combining product development and care with hands-on technology.',
+            'team.richard.role': 'Owner R2R Engineering',
+            'team.richard.bio': '25 years in product development and innovation. Brings technology and care together — with a focus on what is actually needed.',
+            'team.ivo.role': 'Founder IMeTech Engineering',
+            'team.ivo.bio': 'Engineer with a mechatronics background. Turns technical ideas into working products — practical, effective, and hands-on.',
 
             'cta.title': 'Ready to label faster?',
             'cta.p': 'Book a free demo and see how AutoAnnotate helps you move faster with your data.',
