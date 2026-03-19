@@ -11,6 +11,44 @@ document.addEventListener('DOMContentLoaded', () => {
         return window.AA_I18N ? AA_I18N.t(AA_I18N.currentLang(), key) : key;
     }
 
+    // ──────────── TRUST MARQUEE (partner logos) ────────────
+    const trustTrack = document.getElementById('trust-marquee-track');
+    if (trustTrack) {
+        const partners = [
+            { name: 'TZA', logo: 'images/TZA.png', alt: 'TZA' },
+            { name: 'Buddy Zorg', logo: 'images/buddy_zorg.png', alt: 'Buddy Zorg' },
+            { name: 'R2R Engineering', logo: 'images/R2R.png', alt: 'R2R Engineering' },
+            { name: 'Photoboothhuren.com', logo: 'images/photoboothhuren.com.webp', alt: 'Photoboothhuren.com' },
+            { name: 'Mijzo', logo: 'images/Mijzo.png', alt: 'Mijzo' },
+            { name: 'Vilans', logo: 'images/Vilans.webp', alt: 'Vilans' },
+            { name: 'Ekas Verduurzaming', logo: 'images/ekas_verduurzaming.png', alt: 'Ekas Verduurzaming' },
+            { name: 'SmartRobot Solutions', logo: 'images/smartrobot.solutions.png', alt: 'SmartRobot Solutions' },
+            { name: 'Avoord', logo: 'images/Avoord.webp', alt: 'Avoord' }
+        ];
+        function shuffleArray(arr) {
+            const a = arr.slice();
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+        const shuffled = shuffleArray(partners);
+        function createLogoEl(p) {
+            const div = document.createElement('div');
+            div.className = 'trust-logo-link';
+            div.setAttribute('aria-hidden', 'true');
+            const img = document.createElement('img');
+            img.src = p.logo;
+            img.alt = p.alt;
+            img.loading = 'eager';
+            div.appendChild(img);
+            return div;
+        }
+        shuffled.forEach(p => trustTrack.appendChild(createLogoEl(p)));
+        shuffled.forEach(p => trustTrack.appendChild(createLogoEl(p)));
+    }
+
     // ──────────── SCROLL PROGRESS BAR ────────────
     const scrollProgress = document.getElementById('scroll-progress');
     if (scrollProgress) {
