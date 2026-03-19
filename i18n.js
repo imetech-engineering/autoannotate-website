@@ -163,6 +163,8 @@
             'team.richard.bio': 'Al 25 jaar productontwikkeling en innovatie. Brengt technologie en zorg samen — integere ondernemer met oog voor wat er echt nodig is.',
             'team.ivo.role': 'Oprichter IMeTech Engineering',
             'team.ivo.bio': 'Engineer met mechatronica-achtergrond. Zet technische ideeën om in werkende producten — praktisch, doeltreffend en hands-on.',
+            'team.richard.linkedinAria': 'LinkedIn-profiel van Richard Schaper (opent in nieuw tabblad)',
+            'team.ivo.linkedinAria': 'LinkedIn-profiel van Ivo Mengerink (opent in nieuw tabblad)',
 
             'cta.title': 'Klaar om sneller te labelen?',
             'cta.p': 'Plan een gratis demo en ontdek hoe AutoAnnotate u sneller vooruithelpt met uw data.',
@@ -347,6 +349,8 @@
             'team.richard.bio': '25 years in product development and innovation. Brings technology and care together — with a focus on what is actually needed.',
             'team.ivo.role': 'Founder IMeTech Engineering',
             'team.ivo.bio': 'Engineer with a mechatronics background. Turns technical ideas into working products — practical, effective, and hands-on.',
+            'team.richard.linkedinAria': 'Richard Schaper’s LinkedIn profile (opens in a new tab)',
+            'team.ivo.linkedinAria': 'Ivo Mengerink’s LinkedIn profile (opens in a new tab)',
 
             'cta.title': 'Ready to label faster?',
             'cta.p': 'Book a free demo and see how AutoAnnotate helps you move faster with your data.',
@@ -392,6 +396,11 @@
         document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
             var key = el.getAttribute('data-i18n-placeholder');
             if (key) el.setAttribute('placeholder', t(lang, key));
+        });
+
+        document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n-aria');
+            if (key) el.setAttribute('aria-label', t(lang, key));
         });
 
         var mt = document.getElementById('meta-title');
