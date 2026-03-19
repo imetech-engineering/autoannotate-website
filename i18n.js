@@ -23,6 +23,7 @@
             'nav.bewijs': 'Bewijs',
             'nav.demoCta': 'Demo Aanvragen',
             'nav.contact': 'Contact',
+            'nav.playground': 'Probeer het',
 
             'product.blockTitle': 'Wat AutoAnnotate doet',
             'product.lead': 'U hebt sensoren in een machine, robot of gebouw en wilt dat een slim systeem ervan leert. Daarvoor hebt u voorbeelden nodig: bij elk moment moet duidelijk zijn wat er gebeurde. Zonder die duidelijkheid leert het systeem niet. Zelf urenlang video zoeken en metingen erbij zoeken kost weken. AutoAnnotate levert de camera\'s: we zetten ze goed neer, nemen beeld en metingen tegelijk op en koppelen wat u op het beeld ziet aan uw sensoren. Zo krijgt u een nette verzameling voorbeelden die u kunt gebruiken om uw systeem te trainen.',
@@ -150,6 +151,23 @@
             'demo.m2': 'Beelden',
             'demo.m3': 'Nauwkeurigheid',
 
+            'playground.title': 'Probeer het zelf — Maatje Pop',
+            'playground.intro': 'Sleep langs de tijdlijn: microfoon, licht, radar en beweging lopen gelijk met het camerabeeld. Zo ziet u hoe “Binnenkomen persoon” en “Oppakken” aan uw sensordata worden gekoppeld.',
+            'playground.disclaimer': 'Vereenvoudigde demo ter illustratie; geen live data van uw omgeving.',
+            'playground.play': 'Afspelen',
+            'playground.pause': 'Pauze',
+            'playground.timelineLabel': 'Tijd op de opname',
+            'playground.sensorsTitle': 'Sensoren (Maatje Pop)',
+            'playground.exportTitle': 'Gekoppelde export (voorbeeld)',
+            'playground.cameraSource': 'Label uit camera',
+            'playground.labelNone': 'Geen actief label',
+            'playground.labelEnter': 'Binnenkomen persoon',
+            'playground.labelPickup': 'Oppakken',
+            'playground.sensorMicrophone': 'Microfoon',
+            'playground.sensorLight': 'Licht',
+            'playground.sensorRadar': 'Radar',
+            'playground.sensorMotion': 'Beweging',
+
             'quote1': 'We hebben weken handwerk uitgespaard; de dataset is een stuk consistenter geworden.',
             'cite1': '— Ivo Mengerink',
             'quote2': 'Exporteren paste direct in ons bestaande werkproces.',
@@ -208,6 +226,7 @@
             'nav.privacy': 'Privacy',
             'nav.bewijs': 'Proof',
             'nav.demoCta': 'Request Demo',
+            'nav.playground': 'Try it',
             'nav.contact': 'Contact',
 
             'product.blockTitle': 'What AutoAnnotate does',
@@ -336,6 +355,23 @@
             'demo.m2': 'Images',
             'demo.m3': 'Accuracy',
 
+            'playground.title': 'Try it yourself — Maatje Pop',
+            'playground.intro': 'Scrub the timeline: microphone, light, radar, and motion stay aligned with the camera view. See how “Person entering” and “Picking up” link to your sensor readings.',
+            'playground.disclaimer': 'Simplified illustration; not live data from your environment.',
+            'playground.play': 'Play',
+            'playground.pause': 'Pause',
+            'playground.timelineLabel': 'Time on recording',
+            'playground.sensorsTitle': 'Sensors (Maatje Pop)',
+            'playground.exportTitle': 'Linked export (sample)',
+            'playground.cameraSource': 'Label from camera',
+            'playground.labelNone': 'No active label',
+            'playground.labelEnter': 'Person entering',
+            'playground.labelPickup': 'Picking up',
+            'playground.sensorMicrophone': 'Microphone',
+            'playground.sensorLight': 'Light',
+            'playground.sensorRadar': 'Radar',
+            'playground.sensorMotion': 'Motion',
+
             'quote1': 'We saved weeks of manual work; the dataset is much more consistent.',
             'cite1': '— Ivo Mengerink',
             'quote2': 'Export dropped straight into our existing workflow.',
@@ -418,6 +454,8 @@
             b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false');
             b.classList.toggle('active', b.getAttribute('data-lang') === lang);
         });
+
+        window.dispatchEvent(new CustomEvent('aa-langchange', { detail: { lang: lang } }));
     }
 
     function currentLang() { return localStorage.getItem('aa_lang') || 'nl'; }
