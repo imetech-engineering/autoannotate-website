@@ -1,434 +1,248 @@
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoAnnotate – Label Sensor-Data Automatisch 100x Sneller</title>
-    <meta name="description"
-        content="AutoAnnotate — automatisch sensor-data labeling platform. Van ruwe data naar AI-klaar datasets voor robots, zorg en retail. 100x sneller dan handmatig.">
-    <meta name="keywords"
-        content="AutoAnnotate, sensor data, labeling, annotatie, AI, machine learning, robots, zorg, retail">
+    <title id="meta-title">AutoAnnotate – Label Sensor-Data Automatisch 100× Sneller</title>
+    <meta id="meta-desc" name="description" content="U heeft sensoren en wilt een ML-model trainen. AutoAnnotate levert de camerasystemen en koppelt beeld automatisch aan uw sensordata. 100× sneller. Lokaal, privacy by design.">
+    <meta name="keywords" content="AutoAnnotate, sensor data, labeling, annotatie, AI, machine learning, robots, zorg, retail">
     <meta name="author" content="R2R Engineering & IMeTech Engineering">
-    <link rel="canonical" href="https://autoannotate.nl">
-    <meta property="og:url" content="https://autoannotate.nl">
-    <meta property="og:title" content="AutoAnnotate – Label Sensor-Data Automatisch 100x Sneller">
-    <meta property="og:description" content="Van ruwe data naar AI-klaar datasets voor robots, zorg en retail.">
+    <link rel="canonical" href="https://autoannotate.nl/">
+    <meta property="og:url" content="https://autoannotate.nl/">
+    <meta property="og:title" content="AutoAnnotate – Label Sensor-Data Automatisch 100× Sneller">
+    <meta property="og:description" content="Wij leveren camerasystemen; gelabelde sensor-data voor ML, automatisch gekoppeld. 100× sneller. Lokaal, privacy by design.">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#FF8C42">
-
-    <!-- Preload critical assets -->
-    <link rel="preload" href="images/logo.png" as="image">
-    <link rel="preload" href="images/workfow.png" as="image">
-    <link rel="preload" href="images/hero-bg-robot.jpg" as="image">
-
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-
-    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div id="scroll-progress" aria-hidden="true"></div>
 
-    <!-- Scroll Progress Bar -->
-    <div id="scroll-progress"></div>
-
-    <!-- ========== NAVBAR ========== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#hero" class="nav-logo">
-                <img src="images/logo.png" alt="AutoAnnotate logo" width="40" height="32">
+                <img class="nav-logo-img" src="images/logo.png" alt="AutoAnnotate" width="40" height="32">
                 <span>AutoAnnotate</span>
             </a>
             <ul class="nav-links" id="nav-links">
-                <li><a href="#probleem">Probleem</a></li>
-                <li><a href="#oplossing">Oplossing</a></li>
-                <li><a href="#voordelen">Voordelen</a></li>
-                <li><a href="#toepassingen">Toepassingen</a></li>
-                <li><a href="#demo">Bewijs</a></li>
-                <li><a href="#contact" class="nav-cta">Demo Aanvragen</a></li>
+                <li><a href="#probleem" data-i18n="nav.probleem">Probleem</a></li>
+                <li><a href="#oplossing" data-i18n="nav.oplossing">Oplossing</a></li>
+                <li><a href="#voordelen" data-i18n="nav.voordelen">Voordelen</a></li>
+                <li><a href="#toepassingen" data-i18n="nav.toepassingen">Toepassingen</a></li>
+                <li><a href="#demo" data-i18n="nav.bewijs">Bewijs</a></li>
+                <li class="nav-lang">
+                    <button type="button" class="lang-btn active" data-lang="nl" aria-pressed="true">NL</button>
+                    <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+                </li>
+                <li><a href="#contact" class="nav-cta" data-i18n="nav.demoCta">Demo Aanvragen</a></li>
             </ul>
-            <button class="hamburger" id="hamburger" aria-label="Menu openen">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button class="hamburger" id="hamburger" type="button" aria-label="Menu">
+                <span></span><span></span><span></span>
             </button>
         </div>
     </nav>
 
-    <!-- ========== HERO ========== -->
     <section class="hero" id="hero">
         <div class="hero-bg" id="hero-bg"></div>
         <div class="hero-overlay"></div>
-        <canvas id="particles-canvas"></canvas>
         <div class="hero-content">
             <img src="images/logo.png" alt="AutoAnnotate" class="hero-logo" width="150" height="120">
-            <h1>AutoAnnotate – Label Sensor-Data <span>Automatisch 100x Sneller</span></h1>
-            <p class="hero-subtitle" id="hero-subtitle">
-                <span id="typewriter-text"></span><span class="cursor"></span>
-            </p>
+            <h1 data-i18n="hero.title">AutoAnnotate – Label Sensor-Data Automatisch 100× Sneller</h1>
+            <p class="hero-subtitle" data-i18n="hero.sub">Sensordata alleen vertelt niet wat er gebeurde. Voor een ML-model hebt u gelabelde data nodig. Wij leveren de camera's en regelen automatische koppeling aan uw sensoren.</p>
+            <p class="hero-pill" data-i18n="hero.privacyTagline">Lokaal · Privacy by design</p>
             <div class="hero-ctas">
-                <a href="#contact" class="btn btn-primary btn-pulse" id="cta-demo">
-                    <svg class="icon-emoji" viewBox="0 0 24 24">
-                        <path
-                            d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.16-.02-2.98a2.15 2.15 0 0 0-2.98-.02z" />
-                        <path
-                            d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-                        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
-                        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-                    </svg>
-                    Gratis Demo
+                <a href="#contact" class="btn btn-primary btn-pulse">
+                    <svg class="icon-emoji" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.16-.02-2.98a2.15 2.15 0 0 0-2.98-.02z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                    <span data-i18n="hero.cta1">Gratis Demo</span>
                 </a>
-                <a href="#contact" class="btn btn-outline" id="cta-contact">
-                    <svg class="icon-emoji" viewBox="0 0 24 24">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                    </svg>
-                    Contact
-                </a>
+                <a href="#oplossing" class="btn btn-outline" data-i18n="hero.cta2">Hoe het werkt</a>
             </div>
         </div>
         <div class="scroll-indicator">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
         </div>
     </section>
 
-    <!-- ========== PROBLEEM ========== -->
     <section class="probleem" id="probleem">
         <div class="container">
             <div class="section-headline reveal">
-                <h2>Handmatig Labelen Kost <span>Weken & Fouten</span></h2>
+                <h2 data-i18n="problem.headline">Handmatig labelen kost weken en fouten</h2>
             </div>
-            <p class="section-intro reveal">Slimme systemen — zoals robots of apps — leren van voorbeelden. Sensoren leveren ruwe data: getallen en grafieken. Maar die zeggen niet wát er gebeurde, bijvoorbeeld "iemand raakte aan" of "iemand sprak". Labels geven die betekenis, zodat het systeem kan leren. Vandaag gebeurt dat labelen meestal met de hand: mensen kijken mee naar data en video en typen labels. Dat is traag en schaalt niet. AutoAnnotate gebruikt camera's om te zien wat er gebeurt en koppelt dat automatisch aan uw sensordata.</p>
+            <p class="section-intro reveal" data-i18n="problem.intro">Slimme systemen leren van voorbeelden. Sensoren leveren ruwe data; die zeggen niet wát er gebeurde. Labels geven betekenis. Meestal doet men dat met de hand: traag en niet schaalbaar. AutoAnnotate levert de camera's en koppelt beeld automatisch aan uw sensordata.</p>
             <div class="probleem-grid">
                 <div class="probleem-image reveal-left">
-                    <img src="images/problem.png" alt="Handmatig vs automatisch labelen – voor en na vergelijking"
-                        loading="lazy" width="600" height="450">
+                    <img src="images/photo-problem.png" alt="" loading="lazy" width="600" height="450">
                 </div>
                 <div class="probleem-points">
                     <div class="pain-point" data-delay="0">
-                        <div class="pain-icon">
-                            <svg viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="M12 6v6l4 2" />
-                            </svg>
-                        </div>
+                        <div class="pain-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
                         <div class="pain-text">
-                            <h3>Tijdrovend</h3>
-                            <p>Handmatig annoteren van sensor-data kost weken tot maanden per project. Uw team zit vast
-                                in repetitief werk.</p>
+                            <h3 data-i18n="problem.p1t">Tijdrovend</h3>
+                            <p data-i18n="problem.p1b">Handmatig annoteren kost weken tot maanden. Uw team zit vast in repetitief werk.</p>
                         </div>
                     </div>
                     <div class="pain-point" data-delay="0.15">
-                        <div class="pain-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2v20M2 12h20" />
-                                <circle cx="12" cy="12" r="3" />
-                            </svg>
-                        </div>
+                        <div class="pain-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="3"/></svg></div>
                         <div class="pain-text">
-                            <h3>Hoge Kosten</h3>
-                            <p>Specialisten inhuren voor data-labeling vreet budgetten op – tot €50.000+ per dataset.
-                            </p>
+                            <h3 data-i18n="problem.p2t">Hoge kosten</h3>
+                            <p data-i18n="problem.p2b">Specialisten voor data-labeling vreten budgetten op — tot €50.000+ per dataset.</p>
                         </div>
                     </div>
                     <div class="pain-point" data-delay="0.3">
-                        <div class="pain-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path
-                                    d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-                                <line x1="12" y1="9" x2="12" y2="13" />
-                                <line x1="12" y1="17" x2="12.01" y2="17" />
-                            </svg>
-                        </div>
+                        <div class="pain-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
                         <div class="pain-text">
-                            <h3>Inconsistentie</h3>
-                            <p>Menselijke annotators maken 5-15% fouten. Wisselende kwaliteit ondermijnt uw AI-modellen.
-                            </p>
+                            <h3 data-i18n="problem.p3t">Inconsistentie</h3>
+                            <p data-i18n="problem.p3b">Menselijke annotators maken 5-15% fouten. Wisselende kwaliteit ondermijnt uw modellen.</p>
                         </div>
                     </div>
                     <div class="counter-row">
-                        <div class="counter-box reveal">
-                            <div class="count" data-target="85" data-suffix="%">0%</div>
-                            <div class="label">Tijdsbesparing</div>
-                        </div>
-                        <div class="counter-box reveal">
-                            <div class="count" data-target="100" data-suffix="x">0x</div>
-                            <div class="label">Sneller dan handmatig</div>
-                        </div>
-                        <div class="counter-box reveal">
-                            <div class="count" data-target="95" data-suffix="%">0%</div>
-                            <div class="label">Nauwkeurigheid</div>
-                        </div>
+                        <div class="counter-box reveal"><div class="count" data-target="85" data-suffix="%">0%</div><div class="label" data-i18n="counter.tijd">Tijdsbesparing</div></div>
+                        <div class="counter-box reveal"><div class="count" data-target="100" data-suffix="x">0x</div><div class="label" data-i18n="counter.100x">100× sneller</div></div>
+                        <div class="counter-box reveal"><div class="count" data-target="95" data-suffix="%">0%</div><div class="label" data-i18n="counter.nauw">Nauwkeurigheid</div></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ========== OPLOSSING ========== -->
     <section class="oplossing" id="oplossing">
         <div class="container">
             <div class="section-headline reveal">
-                <h2><span>4</span> Simpele Stappen</h2>
+                <h2><span data-i18n="solution.headline">4 simpele stappen</span></h2>
             </div>
-            <div class="workflow-wrapper reveal-scale">
-                <img src="images/workfow.png"
-                    alt="AutoAnnotate 4-stappen workflow: Capture, Detect, Annotate, Export" loading="lazy"
-                    width="500" height="700">
+            <div class="oplossing-visual reveal-scale">
+                <img src="images/photo-solution.png" alt="" loading="lazy" width="800" height="450" class="oplossing-hero-img">
             </div>
             <div class="steps-grid">
                 <div class="step-card reveal" data-delay="0">
-                    <div class="step-tooltip">Verbind uw camera's of upload bestaande sensor-data</div>
                     <div class="step-number">1</div>
-                    <h3>Capture</h3>
-                    <p>Sluit uw camera's en sensoren aan; wij halen de data binnen.</p>
+                    <h3 data-i18n="solution.s1t">Capture</h3>
+                    <p data-i18n="solution.s1b">Wij leveren en installeren de camerasystemen en koppelen ze aan uw sensoren. Beeld en sensorstreams lopen synchroon op één tijdlijn.</p>
                 </div>
                 <div class="step-card reveal" data-delay="0.15">
-                    <div class="step-tooltip">AI-visie detecteert automatisch objecten en patronen</div>
                     <div class="step-number">2</div>
-                    <h3>Detect</h3>
-                    <p>AI Vision herkent automatisch objecten en patronen.</p>
+                    <h3 data-i18n="solution.s2t">Detect</h3>
+                    <p data-i18n="solution.s2b">Op het camerabeeld herkent AI-visie objecten, personen en gebeurtenissen.</p>
                 </div>
                 <div class="step-card reveal" data-delay="0.3">
-                    <div class="step-tooltip">Het systeem koppelt wat de camera ziet aan uw sensordata</div>
                     <div class="step-number">3</div>
-                    <h3>Annotate</h3>
-                    <p>Automatische labels: wat er gebeurt wordt gekoppeld aan de sensor-metingen.</p>
+                    <h3 data-i18n="solution.s3t">Annotate</h3>
+                    <p data-i18n="solution.s3b">Wat er in beeld gebeurt, wordt automatisch gekoppeld aan de sensorwaarden op hetzelfde tijdstip.</p>
                 </div>
                 <div class="step-card reveal" data-delay="0.45">
-                    <div class="step-tooltip">Uw gelabelde dataset exporteert u in standaard formaten</div>
                     <div class="step-number">4</div>
-                    <h3>Export</h3>
-                    <p>Exporteer uw gelabelde dataset in standaard formaten, klaar voor verdere verwerking.</p>
+                    <h3 data-i18n="solution.s4t">Export</h3>
+                    <p data-i18n="solution.s4b">U exporteert de gelabelde dataset in standaardformaten (o.a. COCO, YOLO, CSV) naar uw modeltraining.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ========== VOORDELEN ========== -->
     <section class="voordelen" id="voordelen">
         <div class="container">
             <div class="section-headline reveal">
-                <h2>Handmatig vs <span>AutoAnnotate</span></h2>
+                <h2 data-i18n="why.title">Handmatig vs <span>AutoAnnotate</span></h2>
             </div>
+            <p class="section-intro centered reveal narrow" data-i18n="why.intro" style="margin-bottom: 2rem;"></p>
             <div class="compare-grid">
-                <!-- Snelheid -->
                 <div class="compare-card reveal" data-delay="0">
-                    <div class="compare-icon">
-                        <svg viewBox="0 0 24 24">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                        </svg>
-                    </div>
-                    <h3>Snelheid</h3>
-                    <div class="compare-row">
-                        <span class="manual">Weken werk</span>
-                        <span class="auto">Uren <svg class="icon-emoji" style="margin-right:0;" viewBox="0 0 24 24">
-                                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
-                            </svg></span>
-                    </div>
-                    <div class="compare-row">
-                        <span class="manual">Handmatige reviews</span>
-                        <span class="auto">Direct klaar</span>
-                    </div>
+                    <div class="compare-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                    <h3 data-i18n="benefits.speed">Snelheid</h3>
+                    <div class="compare-row"><span class="manual" data-i18n="ben.s1m">Weken werk</span><span class="auto" data-i18n="ben.s1a">Uren</span></div>
+                    <div class="compare-row"><span class="manual" data-i18n="ben.s2m">Handmatige reviews</span><span class="auto" data-i18n="ben.s2a">Direct klaar</span></div>
                     <div class="progress-bar-wrap">
-                        <div class="progress-label">
-                            <span>Verwerkingssnelheid</span>
-                            <span class="progress-value">95%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="95"></div>
-                        </div>
+                        <div class="progress-label"><span data-i18n="ben.bar1">Verwerkingssnelheid</span><span class="progress-value">95%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="95"></div></div>
                     </div>
                 </div>
-                <!-- Consistentie -->
                 <div class="compare-card reveal" data-delay="0.15">
-                    <div class="compare-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                            <polyline points="22 4 12 14.01 9 11.01" />
-                        </svg>
-                    </div>
-                    <h3>Consistentie</h3>
-                    <div class="compare-row">
-                        <span class="manual">5-15% fouten</span>
-                        <span class="auto">99%+ accuraat <svg class="icon-emoji" style="margin-right:0;"
-                                viewBox="0 0 24 24">
-                                <polyline points="20 6 9 17 4 12" />
-                            </svg></span>
-                    </div>
-                    <div class="compare-row">
-                        <span class="manual">Wisselende kwaliteit</span>
-                        <span class="auto">Perfecte herhaling</span>
-                    </div>
+                    <div class="compare-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                    <h3 data-i18n="benefits.consistency">Consistentie</h3>
+                    <div class="compare-row"><span class="manual" data-i18n="ben.c1m">5-15% fout</span><span class="auto" data-i18n="ben.c1a">99%+ accuraat</span></div>
+                    <div class="compare-row"><span class="manual" data-i18n="ben.c2m">Wisselende kwaliteit</span><span class="auto" data-i18n="ben.c2a">Herhaalbaar</span></div>
                     <div class="progress-bar-wrap">
-                        <div class="progress-label">
-                            <span>Nauwkeurigheid</span>
-                            <span class="progress-value">99%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="99"></div>
-                        </div>
+                        <div class="progress-label"><span data-i18n="ben.bar2">Nauwkeurigheid</span><span class="progress-value">99%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="99"></div></div>
                     </div>
                 </div>
-                <!-- Schaalbaarheid -->
                 <div class="compare-card reveal" data-delay="0.3">
-                    <div class="compare-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z" />
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                            <line x1="12" y1="22.08" x2="12" y2="12" />
-                        </svg>
-                    </div>
-                    <h3>Schaalbaarheid</h3>
-                    <div class="compare-row">
-                        <span class="manual">Beperkt team</span>
-                        <span class="auto">Onbeperkt <svg class="icon-emoji" style="margin-right:0;"
-                                viewBox="0 0 24 24">
-                                <path
-                                    d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.585 0-4.585 8 0 8 5.606 0 7.644-8 12.74-8z" />
-                            </svg></span>
-                    </div>
-                    <div class="compare-row">
-                        <span class="manual">Lineaire kosten</span>
-                        <span class="auto">Vast tarief</span>
-                    </div>
+                    <div class="compare-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+                    <h3 data-i18n="benefits.scale">Schaal</h3>
+                    <div class="compare-row"><span class="manual" data-i18n="ben.sc1m">Beperkt team</span><span class="auto" data-i18n="ben.sc1a">Opschalen</span></div>
+                    <div class="compare-row"><span class="manual" data-i18n="ben.sc2m">Lineaire kosten</span><span class="auto" data-i18n="ben.sc2a">Voorspelbaar</span></div>
                     <div class="progress-bar-wrap">
-                        <div class="progress-label">
-                            <span>Schaalbaarheid</span>
-                            <span class="progress-value">100%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="100"></div>
-                        </div>
+                        <div class="progress-label"><span data-i18n="ben.bar3">Schaalbaarheid</span><span class="progress-value">100%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="100"></div></div>
                     </div>
                 </div>
+            </div>
+            <div class="privacy-block reveal" id="privacy">
+                <h3 class="privacy-block-title" data-i18n="privacy.title">Privacy by design — lokaal</h3>
+                <p data-i18n="privacy.short">Beeld van onze camerasystemen en uw sensordata blijven bij voorkeur bij u. AutoAnnotate is gebouwd om lokaal in uw omgeving te draaien — geen verplichte upload naar externe cloud. Privacy by design; u houdt regie over opslag en verwerking.</p>
             </div>
         </div>
     </section>
 
-    <!-- ========== TOEPASSINGEN ========== -->
     <section class="toepassingen" id="toepassingen">
         <div class="container">
             <div class="section-headline reveal">
-                <h2>Waar <span>AutoAnnotate</span> Werkt</h2>
+                <h2 data-i18n="apps.title">Waar <span>AutoAnnotate</span> Werkt</h2>
+            </div>
+            <div class="toepassingen-visual reveal">
+                <img src="images/photo-applications.png" alt="" loading="lazy" width="900" height="400" class="applications-hero-img">
             </div>
             <div class="masonry-grid">
-                <!-- Zorgrobots -->
                 <div class="app-card reveal" data-delay="0">
-                    <div class="app-card-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M4.8 2.3A.3.3 0 105 2H4a2 2 0 00-2 2v5a6 6 0 006 6v0a6 6 0 006-6V4a2 2 0 00-2-2h-1a.2.2 0 10.3.3" />
-                            <path d="M8 15v1a6 6 0 006 6v0a6 6 0 006-6v-4" />
-                            <circle cx="20" cy="10" r="2" />
-                        </svg>
-                    </div>
-                    <h3>Zorgrobots</h3>
-                    <p>Automatisch labelen van patiënt-interactie data voor zorgrobot-training. Herken gebaren,
-                        houdingen en objecten in zorgomgevingen.</p>
+                    <div class="app-card-icon"><svg viewBox="0 0 24 24"><path d="M4.8 2.3A.3.3 0 105 2H4a2 2 0 00-2 2v5a6 6 0 006 6v0a6 6 0 006-6V4a2 2 0 00-2-2h-1a.2.2 0 10.3.3"/><path d="M8 15v1a6 6 0 006 6v0a6 6 0 006-6v-4"/><circle cx="20" cy="10" r="2"/></svg></div>
+                    <h3 data-i18n="apps.a1t">Zorgrobots</h3>
+                    <p data-i18n="apps.a1b">Sensoren op de robot of in de omgeving + onze camera-setup: automatisch gelabelde interactiedata voor training.</p>
                 </div>
-                <!-- Wearables -->
                 <div class="app-card reveal" data-delay="0.15">
-                    <div class="app-card-icon">
-                        <svg viewBox="0 0 24 24">
-                            <rect x="6" y="1" width="12" height="22" rx="2" />
-                            <path d="M12 17h.01" />
-                            <path d="M9 6h6" />
-                        </svg>
-                    </div>
-                    <h3>Wearables & Val-detectie</h3>
-                    <p>IMU en accelerometer-data automatisch annoteren voor val-detectie algoritmes. Kritiek voor
-                        ouderenzorg en revalidatie.</p>
+                    <div class="app-card-icon"><svg viewBox="0 0 24 24"><rect x="6" y="1" width="12" height="22" rx="2"/><path d="M12 17h.01"/><path d="M9 6h6"/></svg></div>
+                    <h3 data-i18n="apps.a2t">Wearables & valdetectie</h3>
+                    <p data-i18n="apps.a2b">Wearable-sensoren gekoppeld aan camerabeeld (door ons geleverd): automatische labels voor valdetectie.</p>
                 </div>
-                <!-- Retail -->
                 <div class="app-card reveal" data-delay="0.3">
-                    <div class="app-card-icon">
-                        <svg viewBox="0 0 24 24">
-                            <circle cx="9" cy="21" r="1" />
-                            <circle cx="20" cy="21" r="1" />
-                            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
-                        </svg>
-                    </div>
-                    <h3>Retail Gedragsanalyse</h3>
-                    <p>Winkelgedrag en klantstromen automatisch labelen. Optimaliseer schapindeling en personeel met
-                        AI-gedreven inzichten.</p>
+                    <div class="app-card-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg></div>
+                    <h3 data-i18n="apps.a3t">Retail-gedragsanalyse</h3>
+                    <p data-i18n="apps.a3b">Sensoren in de winkel + camera's van AutoAnnotate: gedrag en stromen automatisch labelen.</p>
                 </div>
-                <!-- Veehouderij -->
                 <div class="app-card reveal" data-delay="0.45">
-                    <div class="app-card-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                            <path d="M2 17l10 5 10-5" />
-                            <path d="M2 12l10 5 10-5" />
-                        </svg>
-                    </div>
-                    <h3>Veehouderij & Koeien-health</h3>
-                    <p>Camera- en sensordata van melkvee automatisch annoteren. Detecteer kreupelheid, eetgedrag en
-                        gezondheidsindicatoren vroegtijdig.</p>
+                    <div class="app-card-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+                    <h3 data-i18n="apps.a4t">Veehouderij & koeien-health</h3>
+                    <p data-i18n="apps.a4b">Sensoren bij het vee + onze camera-opstelling: gedrag en gezondheidssignalen automatisch koppelen.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ========== DEMO / PROOF ========== -->
     <section class="demo" id="demo">
         <div class="container">
             <div class="section-headline reveal">
-                <h2>Bewezen bij <span>SAR Maatje Pop</span></h2>
+                <h2><span data-i18n="demo.proofTitlePrefix">Bewezen bij</span> <span>SAR Maatje Pop</span></h2>
             </div>
             <div class="demo-grid">
                 <div class="demo-visual reveal-left">
-                    <img src="images/maatje-pop.png" alt="SAR Maatje Pop – Zorgrobot in actie" class="demo-image-png"
-                        loading="lazy">
+                    <img src="images/maatje-pop.png" alt="SAR Maatje Pop" class="demo-image-png" loading="lazy">
                 </div>
                 <div class="demo-info reveal-right">
-                    <h3>Werkt bij <span>SAR Maatje Pop</span></h3>
-                    <p>Ons platform wordt actief ingezet bij het SAR Maatje Pop project — een sociale assistentie-robot
-                        voor ouderenzorg. AutoAnnotate versnelt het herkennen van personen en interacties, zodat de pop
-                        sneller leert wanneer iemand aandacht zoekt of met rust gelaten wil worden.</p>
+                    <h3 data-i18n="demo.h">Werkt bij <span>SAR Maatje Pop</span></h3>
+                    <p data-i18n="demo.p">Bij SAR Maatje Pop leveren wij de camera-oplossing naast de bestaande sensoren en robot. Zo wordt interactie automatisch gelabeld — de robot leert sneller wanneer iemand aandacht zoekt of rust wil.</p>
                     <div class="metrics-row">
-                        <div class="metric">
-                            <div class="metric-value" data-target="100" data-suffix="x">0x</div>
-                            <div class="metric-label">Sneller labelen</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value" data-target="50" data-suffix="K+">0</div>
-                            <div class="metric-label">Frames verwerkt</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value" data-target="95" data-suffix="%">0%</div>
-                            <div class="metric-label">Nauwkeurigheid</div>
-                        </div>
+                        <div class="metric"><div class="metric-value" data-target="100" data-suffix="x">0x</div><div class="metric-label" data-i18n="demo.m1">Sneller labelen</div></div>
+                        <div class="metric"><div class="metric-value" data-target="50" data-suffix="K+">0</div><div class="metric-label" data-i18n="demo.m2">Frames</div></div>
+                        <div class="metric"><div class="metric-value" data-target="95" data-suffix="%">0%</div><div class="metric-label" data-i18n="demo.m3">Nauwkeurigheid</div></div>
                     </div>
                     <div class="testimonial-slider" id="testimonial-slider">
                         <div class="testimonial-slides-wrapper">
-                            <div class="testimonial-slide active">
-                                <blockquote>"AutoAnnotate heeft ons weken aan handmatig labelwerk bespaard. De
-                                    kwaliteit van onze datasets is significant verbeterd."</blockquote>
-                                <cite>— Ivo Mengerink</cite>
-                            </div>
-                            <div class="testimonial-slide">
-                                <blockquote>"De integratie met onze bestaande pipeline was naadloos. We exporteren nu
-                                    direct
-                                    in COCO-formaat naar ons trainingscluster."</blockquote>
-                                <cite>— R2R Engineering Team</cite>
-                            </div>
-                            <div class="testimonial-slide">
-                                <blockquote>"Wat voorheen 3 maanden kostte, doen we nu in 2 weken. De consistentie van
-                                    labels
-                                    is bovendien veel hoger."</blockquote>
-                                <cite>— SAR Maatje Pop ontwikkelteam</cite>
-                            </div>
+                            <div class="testimonial-slide active"><blockquote data-i18n="quote1">We hebben weken handwerk uitgespaard; de dataset is een stuk consistenter geworden.</blockquote><cite data-i18n="cite1">— Ivo Mengerink</cite></div>
+                            <div class="testimonial-slide"><blockquote data-i18n="quote2">Exporteren naar COCO paste direct in onze bestaande pipeline.</blockquote><cite data-i18n="cite2">— R2R Engineering</cite></div>
+                            <div class="testimonial-slide"><blockquote data-i18n="quote3">Wat maanden kostte, deden we in weken — met minder discussie over labels.</blockquote><cite data-i18n="cite3">— Ontwikkelteam Maatje Pop</cite></div>
                         </div>
                         <div class="slider-dots">
                             <button class="slider-dot active" data-slide="0" aria-label="Testimonial 1"></button>
@@ -441,60 +255,37 @@
         </div>
     </section>
 
-    <!-- ========== CTA FOOTER ========== -->
     <section class="cta-footer" id="contact">
         <div class="container">
             <div class="cta-grid">
                 <div class="cta-text">
-                    <h2>Klaar om Sneller te Labelen?</h2>
-                    <p>Ontdek hoe AutoAnnotate uw data-pipeline kan versnellen. Plan een gratis demo en ervaar het
-                        verschil.</p>
-                    <a href="#contact" class="mega-btn" id="mega-cta">
-                        <svg class="icon-emoji" viewBox="0 0 24 24">
-                            <path
-                                d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.16-.02-2.98a2.15 2.15 0 0 0-2.98-.02z" />
-                            <path
-                                d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-                            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
-                            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-                        </svg>
-                        Plan Uw Demo
-                        <svg viewBox="0 0 24 24"
-                            style="width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:2;">
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                            <polyline points="12 5 19 12 12 19" />
-                        </svg>
+                    <h2 data-i18n="cta.title">Klaar om sneller te labelen?</h2>
+                    <p data-i18n="cta.p">Plan een gratis demo en ontdek hoe AutoAnnotate uw data-pipeline versnelt.</p>
+                    <a href="#contact-form-wrap" class="mega-btn">
+                        <svg class="icon-emoji" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.16-.02-2.98a2.15 2.15 0 0 0-2.98-.02z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                        <span data-i18n="cta.btn">Plan demo</span>
+                        <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                     </a>
                 </div>
-                <div class="contact-form">
-                    <h3><svg class="icon-emoji" viewBox="0 0 24 24">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                            <polyline points="22,6 12,13 2,6" />
-                        </svg> Neem Contact Op</h3>
+                <div class="contact-form" id="contact-form-wrap">
+                    <h3><svg class="icon-emoji" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <span data-i18n="form.title">Neem contact op</span></h3>
                     <form id="contact-form">
-                        <!-- Web3Forms: add your access keys in the value attributes (see README). -->
                         <input type="hidden" name="access_key_imetech" id="access_key_imetech" value="36fe41a3-1e8e-4282-a4d9-5d8ee89c7a64">
                         <input type="hidden" name="access_key_r2r" id="access_key_r2r" value="216bac50-dceb-4bd1-80a4-8685c77135e9">
-                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1" autocomplete="off">
+                        <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off">
                         <div class="form-group">
-                            <input type="text" name="naam" placeholder="Uw naam" required id="form-naam">
+                            <input type="text" name="naam" required id="form-naam" placeholder="Naam" data-i18n-placeholder="form.name">
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" placeholder="Uw e-mailadres" required id="form-email">
+                            <input type="email" name="email" required id="form-email" placeholder="E-mail" data-i18n-placeholder="form.email">
                         </div>
                         <div class="form-group">
-                            <input type="text" name="bedrijf" placeholder="Bedrijfsnaam" id="form-bedrijf">
+                            <input type="text" name="bedrijf" id="form-bedrijf" placeholder="Organisatie" data-i18n-placeholder="form.company">
                         </div>
                         <div class="form-group">
-                            <textarea name="bericht" placeholder="Uw bericht of vraag..." rows="4"
-                                id="form-bericht"></textarea>
+                            <textarea name="bericht" rows="4" id="form-bericht" placeholder="Bericht" data-i18n-placeholder="form.msg"></textarea>
                         </div>
-                        <button type="submit" class="form-submit" id="form-submit">Verstuur Bericht <svg
-                                class="icon-emoji" viewBox="0 0 24 24"
-                                style="margin: 0; margin-left: 0.3rem; stroke: currentColor;">
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                                <polyline points="12 5 19 12 12 19" />
-                            </svg></button>
+                        <button type="submit" class="form-submit" id="form-submit" data-i18n="form.submit">Versturen</button>
                         <div class="form-message" id="form-message"></div>
                     </form>
                 </div>
@@ -502,20 +293,16 @@
         </div>
     </section>
 
-    <!-- ========== SITE FOOTER ========== -->
     <footer class="site-footer">
         <div class="container">
-            <p class="footer-location"><svg class="icon-emoji" viewBox="0 0 24 24" style="margin-right: 0.3rem;">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
-                </svg> Arnhem, Nederland</p>
-            <p>Initiatief van <a href="https://r2r.nl" target="_blank" rel="noopener">R2R Engineering</a> & <a
-                    href="https://imetech.nl" target="_blank" rel="noopener">IMeTech Engineering</a></p>
-            <p style="margin-top: 0.5rem; opacity: 0.5;">© 2026 AutoAnnotate — Alle rechten voorbehouden</p>
+            <p class="footer-location"><svg class="icon-emoji" viewBox="0 0 24 24" style="margin-right:0.3rem;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> <span data-i18n="footer.loc">Arnhem, Nederland</span></p>
+            <p><span data-i18n="footer.by">Initiatief van</span> <a href="https://r2r.nl" target="_blank" rel="noopener">R2R Engineering</a> & <a href="https://imetech.nl" target="_blank" rel="noopener">IMeTech Engineering</a></p>
+            <p class="footer-privacy" data-i18n="footer.privacy">Lokaal verwerken · Privacy by design</p>
+            <p style="margin-top:0.5rem;opacity:0.5;"><span data-i18n="footer.copy">© 2026 AutoAnnotate</span></p>
         </div>
     </footer>
 
+    <script src="i18n.js"></script>
     <script src="script.js"></script>
 </body>
-
 </html>

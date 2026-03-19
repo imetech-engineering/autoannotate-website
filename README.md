@@ -1,23 +1,23 @@
-# AutoAnnotate – Label Sensor-Data 100x Faster
+# AutoAnnotate website
 
-**Website:** [autoannotate.nl](https://autoannotate.nl)
+**Live site:** [autoannotate.nl](https://autoannotate.nl)  
+The homepage is **Dutch/English** (toggle **NL | EN** in the nav; choice is stored in `localStorage`). Copy lives in [`i18n.js`](i18n.js). An older snapshot may live under `/v0/` on deploy for reference.
 
-AutoAnnotate is an automated sensor-data labeling platform designed to transform raw data into AI-ready datasets for robots, healthcare, and retail. By leveraging AI Vision, it automates the tedious process of manual annotation, making it 100x faster and significantly more accurate.
+## Product screenshots
 
-## 🚀 Key Features
+Add real UI captures under [`images/product/`](images/product/) when available and wire them in `index.html` if you want a dedicated product strip.
 
-- **4-Step Workflow**: Capture, Detect, Annotate, and Export.
-- **Multi-Format Export**: Support for COCO, YOLO, Pascal VOC, and more.
-- **High Accuracy**: Over 99% accuracy in object detection and pattern recognition.
-- **Scalable**: Process thousands of frames with consistent quality.
-- **Industry Versatility**: Used in healthcare (care robots), retail (behavioral analysis), and agriculture (livestock health).
+## Features
 
-## 🛠 Tech Stack
+- **Workflow**: Capture → Detect → Annotate → Export (COCO, YOLO, CSV, JSON, etc.)
+- **Sections**: What AutoAnnotate is, glossary, capabilities, problem/solution, benefits, privacy/GDPR, market context, use cases, Maatje Pop proof, contact
+- **Animations**: GSAP + ScrollTrigger (lightweight scroll reveals)
 
-- **Frontend**: HTML5, CSS3 (Vanilla), JavaScript (ES6+)
-- **Animations**: GSAP (GreenSock Animation Platform) & ScrollTrigger
-- **Visuals**: Particles.js (via Canvas)
-- **Deployment Ready**: Standard static hosting compatible.
+## Tech stack
+
+- HTML5, CSS3, vanilla JS
+- [`i18n.js`](i18n.js) + [`script.js`](script.js)
+- GSAP (CDN)
 
 ## 💻 Local Development
 
@@ -42,7 +42,7 @@ The contact form sends submissions to both partners via [Web3Forms](https://web3
    - Create a second form, or use a second account, and get an **Access Key** for the R2R contact inbox.
 
 2. **Put the keys in the website**
-   - Open `index.html` and find the contact form (around the “Neem Contact Op” section).
+   - Open `index.html` and find the contact form (footer **Contact** block).
    - You’ll see two hidden inputs:
      - `id="access_key_imetech"` → set `value="YOUR_IMETECH_ACCESS_KEY"`
      - `id="access_key_r2r"` → set `value="YOUR_R2R_ACCESS_KEY"`
