@@ -15,15 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const trustTrack = document.getElementById('trust-marquee-track');
     if (trustTrack) {
         const partners = [
-            { name: 'TZA', logo: 'images/TZA.png', alt: 'TZA' },
-            { name: 'Buddy Zorg', logo: 'images/buddy_zorg.png', alt: 'Buddy Zorg' },
-            { name: 'R2R Engineering', logo: 'images/R2R.png', alt: 'R2R Engineering' },
-            { name: 'Photoboothhuren.com', logo: 'images/photoboothhuren.com.webp', alt: 'Photoboothhuren.com' },
-            { name: 'Mijzo', logo: 'images/Mijzo.png', alt: 'Mijzo' },
-            { name: 'Vilans', logo: 'images/Vilans.webp', alt: 'Vilans' },
-            { name: 'Ekas Verduurzaming', logo: 'images/ekas_verduurzaming.png', alt: 'Ekas Verduurzaming' },
-            { name: 'SmartRobot Solutions', logo: 'images/smartrobot.solutions.png', alt: 'SmartRobot Solutions' },
-            { name: 'Avoord', logo: 'images/Avoord.webp', alt: 'Avoord' }
+            { name: 'TZA', logo: '/images/TZA.png', alt: 'TZA' },
+            { name: 'Buddy Zorg', logo: '/images/buddy_zorg.png', alt: 'Buddy Zorg' },
+            { name: 'R2R Engineering', logo: '/images/R2R.png', alt: 'R2R Engineering' },
+            { name: 'Photoboothhuren.com', logo: '/images/photoboothhuren.com.webp', alt: 'Photoboothhuren.com' },
+            { name: 'Mijzo', logo: '/images/Mijzo.png', alt: 'Mijzo' },
+            { name: 'Vilans', logo: '/images/Vilans.webp', alt: 'Vilans' },
+            { name: 'Ekas Verduurzaming', logo: '/images/ekas_verduurzaming.png', alt: 'Ekas Verduurzaming' },
+            { name: 'SmartRobot Solutions', logo: '/images/smartrobot.solutions.png', alt: 'SmartRobot Solutions' },
+            { name: 'Avoord', logo: '/images/Avoord.webp', alt: 'Avoord' }
         ];
         /* Vaste volgorde (geen shuffle): voorkomt verschillende marquee-lengte/perceptie na F5 */
         const ordered = partners.slice().sort((a, b) => a.name.localeCompare(b.name, 'nl'));
@@ -141,10 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-
-        window.addEventListener('load', () => {
-            ScrollTrigger.refresh();
-        });
     }
 
     // ──────────── COUNTER ANIMATION ────────────
@@ -292,7 +288,266 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ──────────── SMOOTH SCROLL + CTA HIGHLIGHT ────────────
+    // ──────────── DEEPLINKS: hash scroll (navbar offset) + contact highlight ────────────
+    function getNavOffset() {
+        return (navbar && navbar.offsetHeight) ? navbar.offsetHeight + 10 : 70;
+    }
+
+    function prefersReducedMotion() {
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    /** Echt scrollende root (bij overflow-x:hidden op html scrollt vaak <body>, niet window). */
+    function getScrollRoot() {
+        return document.scrollingElement || document.documentElement;
+    }
+
+    function getDocScrollY() {
+        return getScrollRoot().scrollTop;
+    }
+
+    function setDocScrollY(y) {
+        const root = getScrollRoot();
+        root.scrollTop = y;
+        window.scrollTo(0, y);
+    }
+
+    /**
+     * Vloeiende scroll: window.scrollTo werkt niet betrouwbaar als scrollingElement === body.
+     * GSAP op scrollTop is consistent; RAF-fallback zet zelfde root.
+     */
+    function smoothScrollWindowTo(targetY) {
+        const root = getScrollRoot();
+        const maxY = Math.max(0, root.scrollHeight - window.innerHeight);
+        const endY = Math.max(0, Math.min(Math.round(targetY), maxY));
+        const startY = root.scrollTop;
+        const distance = endY - startY;
+        if (Math.abs(distance) < 2) return Promise.resolve();
+
+        if (prefersReducedMotion()) {
+            setDocScrollY(endY);
+            return Promise.resolve();
+        }
+
+        const durationSec = Math.min(1.15, Math.max(0.52, Math.abs(distance) * 0.0009));
+
+        if (typeof gsap !== 'undefined') {
+            gsap.killTweensOf(root);
+            return gsap.to(root, {
+                scrollTop: endY,
+                duration: durationSec,
+                ease: 'power2.out',
+                overwrite: 'auto'
+            }).then(() => {});
+        }
+
+        const durationMs = durationSec * 1000;
+        const t0 = performance.now();
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+        return new Promise((resolve) => {
+            function tick(now) {
+                const elapsed = now - t0;
+                const t = Math.min(1, elapsed / durationMs);
+                setDocScrollY(startY + distance * easeOutCubic(t));
+                if (t < 1) requestAnimationFrame(tick);
+                else resolve();
+            }
+            requestAnimationFrame(tick);
+        });
+    }
+
+    function highlightContactForm(delayMs) {
+        const cf = document.querySelector('.contact-form');
+        if (!cf) return;
+        setTimeout(() => {
+            cf.classList.remove('highlight');
+            void cf.offsetWidth;
+            cf.classList.add('highlight');
+            const firstInput = cf.querySelector('input');
+            if (firstInput) firstInput.focus({ preventScroll: true });
+            setTimeout(() => cf.classList.remove('highlight'), 2200);
+        }, delayMs);
+    }
+
+    function scrollToHashTarget(hash, smooth) {
+        if (!hash || hash === '#') return false;
+        const targetEl = document.querySelector(hash);
+        if (!targetEl) return false;
+        const targetPos = targetEl.getBoundingClientRect().top + getDocScrollY() - getNavOffset();
+        const y = Math.max(0, targetPos);
+        const isContact = hash === '#contact' || hash === '#contact-form-wrap';
+
+        function runContactHighlight() {
+            if (isContact) highlightContactForm(smooth && !prefersReducedMotion() ? 120 : 80);
+        }
+
+        if (!smooth || prefersReducedMotion()) {
+            setDocScrollY(y);
+            runContactHighlight();
+            return true;
+        }
+
+        smoothScrollWindowTo(y).then(runContactHighlight);
+        return true;
+    }
+
+    function scrollToSectionId(sectionId, smooth) {
+        if (!sectionId || sectionId === 'hero') {
+            if (!smooth || prefersReducedMotion()) setDocScrollY(0);
+            else smoothScrollWindowTo(0);
+            return true;
+        }
+        return scrollToHashTarget('#' + sectionId, smooth);
+    }
+
+    function stripLangParam(search) {
+        const p = new URLSearchParams(search || '');
+        p.delete('lang');
+        const s = p.toString();
+        return s ? '?' + s : '';
+    }
+
+    function isAppPath(pathname) {
+        const I = window.AA_I18N;
+        if (!I) return false;
+        const norm = (pathname || '/').replace(/\/+$/, '') || '/';
+        if (norm === '/') return true;
+        const parts = norm.split('/').filter(Boolean);
+        if (parts.length === 1) {
+            if (parts[0] === 'en' || parts[0] === 'nl') return true;
+            return I.isValidSection(parts[0]);
+        }
+        if (parts.length === 2) {
+            if (parts[0] !== 'en' && parts[0] !== 'nl') return false;
+            return I.isValidSection(parts[1]);
+        }
+        return false;
+    }
+
+    function normalizeNlPrefixPath() {
+        const I = window.AA_I18N;
+        if (!I || !history.replaceState) return;
+        const parsed = I.parsePathname(location.pathname);
+        if (parsed.lang !== 'nl') return;
+        const target = I.pathFor('nl', parsed.section);
+        if (location.pathname === target) return;
+        try {
+            history.replaceState(null, '', target + stripLangParam(location.search) + location.hash);
+        } catch (e) { /* ignore */ }
+    }
+
+    function navigateToPath(fullPathWithSearchHash, { replace = false, smooth = true } = {}) {
+        const I = window.AA_I18N;
+        if (!I) return;
+        let url;
+        try {
+            url = new URL(fullPathWithSearchHash, location.href);
+        } catch (e) {
+            return;
+        }
+        const parsed = I.parsePathname(url.pathname);
+        if (parsed.lang !== null) I.applyLang(parsed.lang);
+        url.searchParams.delete('lang');
+        const pathAndSearch = url.pathname + (url.search || '');
+        const hash = url.hash || '';
+        try {
+            if (replace) history.replaceState(null, '', pathAndSearch + hash);
+            else history.pushState(null, '', pathAndSearch + hash);
+        } catch (err) { /* ignore */ }
+        scrollToSectionId(parsed.section, smooth);
+        if (typeof ScrollTrigger !== 'undefined') {
+            requestAnimationFrame(() => ScrollTrigger.refresh());
+        }
+    }
+
+    function applyRouteFromLocation(smooth) {
+        const I = window.AA_I18N;
+        if (!I) return;
+        const parsed = I.parsePathname(location.pathname);
+        if (parsed.lang !== null) I.applyLang(parsed.lang);
+        let sec = parsed.section;
+        if (!sec && location.hash && location.hash.length > 1) {
+            const h = location.hash.slice(1);
+            if (I.isValidSection(h)) sec = h;
+        }
+        if (sec) scrollToSectionId(sec, smooth);
+        else if (location.hash) scrollToHashTarget(location.hash, smooth);
+        else scrollToSectionId(null, smooth);
+    }
+
+    function updateSectionLinks() {
+        const I = window.AA_I18N;
+        if (!I) return;
+        const lang = I.currentLang();
+        document.querySelectorAll('a[data-aa-section]').forEach(a => {
+            const sec = a.getAttribute('data-aa-section');
+            if (!sec) return;
+            a.setAttribute('href', I.pathFor(lang, sec));
+        });
+    }
+
+    normalizeNlPrefixPath();
+    updateSectionLinks();
+    document.addEventListener('aa-lang-change', (e) => {
+        const I = window.AA_I18N;
+        if (!I || !e.detail || !e.detail.lang) return;
+        const L = e.detail.lang;
+        const cur = I.parsePathname(location.pathname);
+        let sec = cur.section;
+        if (!sec && location.hash && location.hash.length > 1) {
+            const h = location.hash.slice(1);
+            if (I.isValidSection(h)) sec = h;
+        }
+        const newPath = I.pathFor(L, sec || 'hero') + stripLangParam(location.search);
+        try {
+            if (history.replaceState) history.replaceState(null, '', newPath + location.hash);
+        } catch (err) { /* ignore */ }
+        updateSectionLinks();
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        const a = e.target.closest('a[href]');
+        if (!a) return;
+        const hrefAttr = a.getAttribute('href');
+        if (!hrefAttr || hrefAttr === '#' || hrefAttr.startsWith('#')) return;
+        if (!hrefAttr.startsWith('/')) return;
+        let url;
+        try {
+            url = new URL(a.href);
+        } catch (err) {
+            return;
+        }
+        if (url.origin !== location.origin) return;
+        if (!isAppPath(url.pathname)) return;
+        e.preventDefault();
+        navigateToPath(url.pathname + url.search + url.hash, { replace: false, smooth: true });
+    }, true);
+
+    window.addEventListener('popstate', () => {
+        normalizeNlPrefixPath();
+        applyRouteFromLocation(true);
+        updateSectionLinks();
+    });
+
+    window.addEventListener('hashchange', () => {
+        if (!location.hash) return;
+        scrollToHashTarget(location.hash, true);
+    });
+
+    window.addEventListener('load', () => {
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+        normalizeNlPrefixPath();
+        const I = window.AA_I18N;
+        const parsed = I ? I.parsePathname(location.pathname) : { section: null };
+        if (parsed.section) scrollToSectionId(parsed.section, false);
+        else if (location.hash) scrollToHashTarget(location.hash, false);
+        else setDocScrollY(0);
+    });
+
+    // ──────────── SMOOTH SCROLL (hash-only links) ────────────
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
@@ -300,23 +555,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetEl = document.querySelector(targetId);
             if (targetEl) {
                 e.preventDefault();
-                const offset = (navbar && navbar.offsetHeight) ? navbar.offsetHeight + 10 : 70;
-                const targetPos = targetEl.getBoundingClientRect().top + window.scrollY - offset;
-                window.scrollTo({ top: targetPos, behavior: 'smooth' });
-                if (targetId === '#contact' || targetId === '#contact-form-wrap') {
-                    const cf = document.querySelector('.contact-form');
-                    if (cf) {
-                        setTimeout(() => {
-                            cf.classList.remove('highlight');
-                            void cf.offsetWidth;
-                            cf.classList.add('highlight');
-                            const firstInput = cf.querySelector('input');
-                            if (firstInput) firstInput.focus();
-                            setTimeout(() => cf.classList.remove('highlight'), 2200);
-                        }, 600);
-                    }
-                }
+                scrollToHashTarget(targetId, true);
             }
         });
+    });
+});
+
+/* Vóór script’s eigen DOMContentLoaded kan i18n al aa-i18n-applied sturen — listener daarom top-level. */
+document.addEventListener('aa-i18n-applied', () => {
+    const I = window.AA_I18N;
+    if (!I) return;
+    const lang = I.currentLang();
+    document.querySelectorAll('a[data-aa-section]').forEach(a => {
+        const sec = a.getAttribute('data-aa-section');
+        if (sec) a.setAttribute('href', I.pathFor(lang, sec));
     });
 });

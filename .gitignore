@@ -12,3 +12,6 @@ Desktop.ini
 # Local environment
 .env
 .env.local
+
+# npm (lokale dev-server)
+node_modules/

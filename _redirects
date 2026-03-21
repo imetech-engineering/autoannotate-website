@@ -1,0 +1,2 @@
+# Netlify (en vergelijkbare hosts): alle paden → index, status 200 (geen redirect-loop)
+/*    /index.html   200

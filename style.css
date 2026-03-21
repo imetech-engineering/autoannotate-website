@@ -39,6 +39,8 @@ html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    max-width: 100%;
 }
 
 body {
@@ -47,6 +49,7 @@ body {
     background: var(--white);
     line-height: 1.7;
     overflow-x: hidden;
+    max-width: 100%;
 }
 
 img {
@@ -260,12 +263,15 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    min-width: 0;
 }
 
 .nav-logo {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    min-width: 0;
+    flex-shrink: 1;
 }
 
 .nav-logo img {
@@ -279,6 +285,9 @@ section {
     font-weight: 700;
     color: var(--white);
     letter-spacing: -0.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .nav-links {
@@ -378,6 +387,7 @@ section {
     z-index: 10001;
     background: none;
     border: none;
+    flex-shrink: 0;
 }
 
 .hamburger span {
@@ -410,7 +420,9 @@ section {
     align-items: stretch;
     text-align: center;
     overflow: hidden;
+    overflow-x: hidden;
     padding: 0;
+    min-width: 0;
 }
 
 .hero-bg {
@@ -448,6 +460,7 @@ section {
     align-self: center;
     width: 100%;
     max-width: 850px;
+    min-width: 0;
     min-height: 0;
     padding: 2rem 1.5rem;
 }
@@ -489,6 +502,10 @@ section {
 }
 
 /* Privacy pill – zelfde pill-stijl als knoppen, vloeiende hover */
+a.hero-pill {
+    text-decoration: none;
+    cursor: pointer;
+}
 .hero-pill {
     display: inline-block;
     padding: 0.6rem 1.5rem;
@@ -566,9 +583,11 @@ section {
     flex-shrink: 0;
     width: 100%;
     max-width: 100%;
+    min-width: 0;
     margin: 0;
     padding: 0 1rem 1.25rem;
     margin-top: auto;
+    overflow-x: hidden;
 }
 
 .hero-trust-label {
@@ -584,6 +603,9 @@ section {
 
 .trust-marquee-wrap {
     overflow: hidden;
+    overflow-x: hidden;
+    max-width: 100%;
+    contain: paint;
     padding: 0.75rem 0;
     background: rgba(208, 202, 196, 0.58);
     border: 1px solid rgba(255, 255, 255, 0.35);
@@ -597,10 +619,12 @@ section {
 
 .trust-marquee-track {
     display: flex;
+    flex-direction: row;
     align-items: center;
     flex-wrap: nowrap;
     gap: 6rem;
     width: max-content;
+    min-width: min-content;
     padding: 0 2rem;
     animation: trust-marquee 50s linear infinite;
 }
@@ -643,11 +667,16 @@ section {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    /*
+     * Eén rij (geen wrap): anders vallen de twee gekopieerde helften onder elkaar als “twee banen”.
+     * Langzamere loop i.p.v. stilstand — nog steeds rustiger dan de standaard 50s.
+     */
     .trust-marquee-track {
-        animation: none;
-        flex-wrap: wrap;
-        justify-content: center;
-        width: 100%;
+        animation: trust-marquee 120s linear infinite;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        width: max-content;
+        min-width: min-content;
         gap: 2.5rem;
     }
 
@@ -871,6 +900,9 @@ section {
     font-size: 0.98rem;
     line-height: 1.65;
     margin: 0;
+}
+.privacy-block p + p {
+    margin-top: 0.85rem;
 }
 
 /* Steps flow: links → rechts, golf in hoogte + vloeiende bezier-pijlen */

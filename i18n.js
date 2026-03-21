@@ -36,6 +36,7 @@
 
             'privacy.title': 'Privacy by design — lokaal',
             'privacy.short': 'Beeld van onze camera\'s en uw meetgegevens blijven bij u. AutoAnnotate is gemaakt om bij u te draaien — u hoeft niets verplicht naar een cloud van een ander te sturen. U houdt zelf de regie over opslag en gebruik.',
+            'privacy.compliance': 'Met persoonsgegevens en privacy gaan we om volgens de AVG en de GDPR (de Europese privacyregels). Onze oplossing en werkwijze zijn daarop ingericht.',
             'market.inline': 'Goede voorbeelddata is steeds belangrijker; vaak is de kwaliteit van de data het echte struikelblok, niet alleen het slimme programma zelf.',
 
             'hero.title': 'Maak AI training data snel, accuraat en schaalbaar.',
@@ -158,13 +159,18 @@
             'cite3': '— Ontwikkelteam Maatje Pop',
 
             'team.title': 'Het team',
-            'team.intro': 'AutoAnnotate is een initiatief van R2R Engineering en IMeTech Engineering — twee ingenieurs die productontwikkeling en zorg combineren met hands-on techniek.',
+            'team.intro': 'AutoAnnotate is een initiatief van R2R Engineering en IMeTech Engineering — een team dat productontwikkeling, zorg en organisatie combineert met hands-on techniek.',
             'team.richard.role': 'Eigenaar R2R Engineering',
-            'team.richard.bio': 'Al 25 jaar productontwikkeling en innovatie. Brengt technologie en zorg samen — integere ondernemer met oog voor wat er echt nodig is.',
+            'team.richard.bio': 'Al 25 jaar productontwikkeling en innovatie. Brengt technologie en zorg samen. Integere ondernemer met oog voor wat er echt nodig is.',
             'team.ivo.role': 'Oprichter IMeTech Engineering',
-            'team.ivo.bio': 'Engineer met mechatronica-achtergrond. Zet technische ideeën om in werkende producten — praktisch, doeltreffend en hands-on.',
+            'team.ivo.bio': 'Engineer met mechatronica-achtergrond. Zet technische ideeën om in werkende producten. Praktisch, doeltreffend en hands-on.',
+            'team.jackie.role': 'Vormgeving & administratie AutoAnnotate',
+            'team.jackie.bio': 'Vormgeving en administratie bij AutoAnnotate. Creatief en scherp. Zorgt voor heldere communicatie en overzicht in de organisatie.',
+            'team.rick.role': 'Adviseur · podiumkunsten & organisatie',
+            'team.rick.bio': 'Ruim twintig jaar ervaring in de podiumkunsten: strategie, financiën en communicatie bij toonaangevende gezelschappen. Adviseur voor AutoAnnotate.',
             'team.richard.linkedinAria': 'LinkedIn-profiel van Richard Schaper (opent in nieuw tabblad)',
             'team.ivo.linkedinAria': 'LinkedIn-profiel van Ivo Mengerink (opent in nieuw tabblad)',
+            'team.rick.linkedinAria': 'LinkedIn-profiel van Rick Spaan (opent in nieuw tabblad)',
 
             'cta.title': 'Klaar om sneller te labelen?',
             'cta.p': 'Plan een gratis demo en ontdek hoe AutoAnnotate u sneller vooruithelpt met uw data.',
@@ -222,6 +228,7 @@
 
             'privacy.title': 'Privacy by design — local',
             'privacy.short': 'Video from our cameras and your readings stay with you. AutoAnnotate is built to run on your own systems — nothing has to be sent to someone else’s cloud unless you want that. You stay in charge of storage and use.',
+            'privacy.compliance': 'We handle personal data in line with the GDPR and EU privacy law — in Dutch often referred to as the AVG. Our product and how we work are set up to meet those requirements.',
             'market.inline': 'Good training examples matter more and more; often data quality is the real hurdle, not only the smart program itself.',
 
             'hero.title': 'AutoAnnotate – fast, accurate, scalable AI training data',
@@ -344,13 +351,18 @@
             'cite3': '— Maatje Pop dev team',
 
             'team.title': 'The team',
-            'team.intro': 'AutoAnnotate is an initiative of R2R Engineering and IMeTech Engineering — two engineers combining product development and care with hands-on technology.',
+            'team.intro': 'AutoAnnotate is an initiative of R2R Engineering and IMeTech Engineering — a team combining product development, care, and organisation with hands-on technology.',
             'team.richard.role': 'Owner R2R Engineering',
-            'team.richard.bio': '25 years in product development and innovation. Brings technology and care together — with a focus on what is actually needed.',
+            'team.richard.bio': '25 years in product development and innovation. Brings technology and care together, with a focus on what is actually needed.',
             'team.ivo.role': 'Founder IMeTech Engineering',
-            'team.ivo.bio': 'Engineer with a mechatronics background. Turns technical ideas into working products — practical, effective, and hands-on.',
+            'team.ivo.bio': 'Engineer with a mechatronics background. Turns technical ideas into working products. Practical, effective, and hands-on.',
+            'team.jackie.role': 'Design & administration, AutoAnnotate',
+            'team.jackie.bio': 'Design and administration at AutoAnnotate. Creative and sharp. Brings clarity to visual communication and day-to-day organisation.',
+            'team.rick.role': 'Advisor · performing arts & organisation',
+            'team.rick.bio': 'Over 20 years in the performing arts: strategy, finance, and communications for leading Dutch music, theatre, and dance companies. Advisor to AutoAnnotate.',
             'team.richard.linkedinAria': 'Richard Schaper’s LinkedIn profile (opens in a new tab)',
             'team.ivo.linkedinAria': 'Ivo Mengerink’s LinkedIn profile (opens in a new tab)',
+            'team.rick.linkedinAria': 'Rick Spaan’s LinkedIn profile (opens in a new tab)',
 
             'cta.title': 'Ready to label faster?',
             'cta.p': 'Book a free demo and see how AutoAnnotate helps you move faster with your data.',
@@ -381,6 +393,44 @@
 
     function t(lang, key) {
         return (STR[lang] && STR[lang][key]) || STR.nl[key] || key;
+    }
+
+    var SECTION_IDS = ['hero', 'probleem', 'oplossing', 'voordelen', 'privacy', 'toepassingen', 'demo', 'team', 'contact', 'contact-form-wrap'];
+
+    function isValidSection(s) {
+        return SECTION_IDS.indexOf(s) !== -1;
+    }
+
+    /** Pad-URL: /team, /contact, /en/team, /nl/team (nl + sectie wordt genormaliseerd naar /sectie) */
+    function parsePathname(pathname) {
+        var p = (pathname || '/').replace(/\/+$/, '') || '/';
+        if (p === '/') return { lang: null, section: null };
+        var parts = p.split('/').filter(Boolean);
+        var lang = null;
+        if (parts[0] === 'en' || parts[0] === 'nl') {
+            lang = parts[0];
+            parts = parts.slice(1);
+        }
+        if (parts.length === 0) return { lang: lang, section: null };
+        if (parts.length > 1) return { lang: lang, section: null };
+        var section = parts[0];
+        if (!isValidSection(section)) return { lang: lang, section: null };
+        return { lang: lang, section: section };
+    }
+
+    /** Taal + sectie naar pad (NL zonder /nl-prefix; EN onder /en/...) */
+    function pathFor(lang, section) {
+        if (!normalizeLang(lang)) lang = 'nl';
+        var sec = section && section !== 'hero' ? section : null;
+        if (!sec) return lang === 'en' ? '/en' : '/';
+        if (lang === 'en') return '/en/' + sec;
+        return '/' + sec;
+    }
+
+    function normalizeLang(v) {
+        if (!v) return null;
+        v = String(v).toLowerCase();
+        return v === 'en' || v === 'nl' ? v : null;
     }
 
     function applyLang(lang) {
@@ -418,18 +468,40 @@
             b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false');
             b.classList.toggle('active', b.getAttribute('data-lang') === lang);
         });
+
+        try {
+            document.dispatchEvent(new CustomEvent('aa-i18n-applied', { detail: { lang: lang } }));
+        } catch (e) { /* ignore */ }
     }
 
     function currentLang() { return localStorage.getItem('aa_lang') || 'nl'; }
-    window.AA_I18N = { applyLang: applyLang, t: t, currentLang: currentLang, STR: STR };
+    window.AA_I18N = {
+        applyLang: applyLang,
+        t: t,
+        currentLang: currentLang,
+        STR: STR,
+        normalizeLang: normalizeLang,
+        parsePathname: parsePathname,
+        pathFor: pathFor,
+        isValidSection: isValidSection,
+        SECTION_IDS: SECTION_IDS
+    };
 
     document.addEventListener('DOMContentLoaded', function () {
-        var saved = localStorage.getItem('aa_lang') || 'nl';
+        var params = new URLSearchParams(window.location.search);
+        var parsed = parsePathname(location.pathname);
+        var fromPathLang = parsed.lang;
+        var fromQuery = normalizeLang(params.get('lang'));
+        var saved = fromPathLang || fromQuery || localStorage.getItem('aa_lang') || 'nl';
         applyLang(saved);
 
         document.querySelectorAll('.lang-btn').forEach(function (btn) {
             btn.addEventListener('click', function () {
-                applyLang(btn.getAttribute('data-lang'));
+                var L = btn.getAttribute('data-lang');
+                applyLang(L);
+                try {
+                    document.dispatchEvent(new CustomEvent('aa-lang-change', { detail: { lang: L } }));
+                } catch (e) { /* ignore */ }
             });
         });
     });

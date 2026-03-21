@@ -21,15 +21,18 @@ Add real UI captures under [`images/product/`](images/product/) when available a
 
 ## 💻 Local Development
 
-To run this project locally, simply clone the repository and open `index.html` in your browser.
+**Pad-URL’s** (`/team`, `/en/contact`, …) zijn client-side routes. Een gewone “static file” server (of Live Server zonder SPA-modus) geeft daarvoor **404** als je het adres direct in de balk plakt. Gebruik daarom lokaal:
 
 ```bash
-git clone https://github.com/[your-username]/auto-annotate-website.git
-cd auto-annotate-website
-# Open index.html in your preferred browser
+cd Website
+npm install
+npm start
 ```
 
-No build step or server is required for development, though using a live-server (like the VS Code Live Server extension) is recommended for the best experience.
+Open daarna **http://localhost:5173/team** — de server (`serve -s`) stuurt onbekende paden naar `index.html`.
+
+- **Alleen de homepage testen:** `index.html` openen of een simpele live server is genoeg.
+- **Productie (autoannotate.nl):** zorg dat je host **óf** `404.html` gebruikt zoals GitHub Pages (kopie van `index.html`, staat al in de repo), **óf** een rewrite naar `index.html` (`.htaccess`, `vercel.json`, `web.config`, of Netlify `_redirects`).
 
 ## 📧 Contact form setup (manual)
 
