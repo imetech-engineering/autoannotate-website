@@ -151,11 +151,11 @@
             'demo.m2': 'Beelden',
             'demo.m3': 'Nauwkeurigheid',
 
-            'quote1': 'We hebben weken handwerk uitgespaard; de dataset is een stuk consistenter geworden.',
-            'cite1': '— Ivo Mengerink',
-            'quote2': 'Exporteren paste direct in ons bestaande werkproces.',
+            'quote1': 'Sinds we AutoAnnotate gebruiken, hoeven we veel minder handmatig te labelen. Zo hebben we sneller bruikbare data en blijft de kwaliteit van de annotaties stabiel.',
+            'cite1': '— Projectcoordinator SAR Maatje Pop',
+            'quote2': 'De export sluit goed aan op ons bestaande werkproces. We kunnen bestanden direct gebruiken zonder extra omzetstappen.',
             'cite2': '— R2R Engineering',
-            'quote3': 'Wat maanden kostte, deden we in weken — met minder discussie over labels.',
+            'quote3': 'Waar we eerst lang bezig waren met afstemmen en corrigeren, maken we nu in kortere tijd duidelijke labels. Dat geeft meer rust in het team.',
             'cite3': '— Ontwikkelteam Maatje Pop',
 
             'team.title': 'Het team',
@@ -343,11 +343,11 @@
             'demo.m2': 'Images',
             'demo.m3': 'Accuracy',
 
-            'quote1': 'We saved weeks of manual work; the dataset is much more consistent.',
-            'cite1': '— Ivo Mengerink',
-            'quote2': 'Export dropped straight into our existing workflow.',
+            'quote1': 'Since we started using AutoAnnotate, we spend far less time on manual labelling. We get usable data faster and the annotation quality stays consistent.',
+            'cite1': '— SAR Maatje Pop project coordinator',
+            'quote2': 'Export fits our existing workflow well. We can use the files directly without extra conversion steps.',
             'cite2': '— R2R Engineering',
-            'quote3': 'What took months we did in weeks — with less debate over labels.',
+            'quote3': 'Where we previously spent a lot of time aligning and correcting, we now produce clear labels in less time. That gives the team more focus.',
             'cite3': '— Maatje Pop dev team',
 
             'team.title': 'The team',

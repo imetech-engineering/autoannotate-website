@@ -1512,14 +1512,14 @@ a.hero-pill {
     position: relative;
     background: var(--white);
     border-radius: var(--radius);
-    padding: 2rem;
+    padding: 1.5rem;
     box-shadow: var(--shadow-sm);
     overflow: hidden;
 }
 
 .testimonial-slides-wrapper {
     position: relative;
-    min-height: 140px;
+    min-height: 120px;
 }
 
 .testimonial-slide {
@@ -2061,7 +2061,7 @@ a.hero-pill {
     }
 
     .testimonial-slides-wrapper {
-        min-height: 160px;
+        min-height: 140px;
     }
 }
 
