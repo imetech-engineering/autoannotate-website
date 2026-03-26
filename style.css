@@ -658,6 +658,458 @@ a.hero-pill {
     filter: drop-shadow(0 2px 8px rgba(26, 26, 46, 0.12));
 }
 
+/* ---------- AI BASICS SECTION ---------- */
+.ai-basics {
+    background: var(--white);
+}
+
+/* -- Basics Visual Map (two-phase flow diagram) -- */
+.basics-map {
+    margin: 1.5rem 0 1.25rem;
+}
+
+.bm-phase {
+    position: relative;
+}
+
+.bm-train {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+
+.bm-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: stretch;
+    flex: 0 0 auto;
+    width: 150px;
+}
+
+.bm-plus {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.bm-node,
+.bm-node-ref {
+    border: 1px solid #f0dfd0;
+    background: #fff;
+    border-radius: 14px;
+    padding: 0.75rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    cursor: pointer;
+    color: var(--text);
+    font-family: var(--font);
+    text-align: left;
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background var(--transition);
+    flex: 0 0 auto;
+    width: 150px;
+}
+
+.bm-node-ref {
+    cursor: default;
+    width: 130px;
+}
+
+.bm-node.bm-wide {
+    width: 165px;
+}
+
+.bm-node:hover {
+    transform: translateY(-3px);
+    border-color: #e9cbb0;
+    box-shadow: var(--shadow-sm);
+}
+
+.bm-node.active {
+    border-color: var(--primary);
+    background: #fff9f4;
+    box-shadow: 0 6px 20px rgba(255, 140, 66, 0.18);
+}
+
+.bm-node-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.bm-node-chart svg {
+    width: 100%;
+    height: 40px;
+    stroke: #d89159;
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.bm-node.active .bm-node-chart svg {
+    stroke: var(--primary-dark);
+}
+
+.bm-node-chart.labeled svg rect {
+    fill: #fff3e6;
+    stroke: #e0a06a;
+    stroke-width: 1;
+}
+
+.bm-node.active .bm-node-chart.labeled svg rect {
+    fill: #ffe8d0;
+    stroke: var(--primary);
+}
+
+.bm-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.bm-tags span {
+    font-size: 0.68rem;
+    padding: 0.18rem 0.4rem;
+    border-radius: 999px;
+    border: 1px solid #e6d5c5;
+    color: #8a6a4e;
+    background: #fff;
+    line-height: 1.3;
+}
+
+.bm-node.active .bm-tags span {
+    border-color: #efbf96;
+    color: #7a4f2e;
+    background: #fff7f0;
+}
+
+.bm-node-stack svg {
+    width: 100%;
+    height: 40px;
+    stroke: #d89159;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.bm-node.active .bm-node-stack svg {
+    stroke: var(--primary-dark);
+}
+
+.bm-model-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    color: #a35c2e;
+    background: radial-gradient(circle at 35% 35%, #fff5ec 0%, #ffe1ca 100%);
+    border: 1px solid #f2c9a9;
+}
+
+.bm-node.active .bm-model-badge {
+    color: #fff;
+    border-color: #d86f29;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+/* Merge SVG connector */
+.bm-flow-merge {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 120px;
+    pointer-events: none;
+}
+
+.bm-flow-merge svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.bm-merge-line {
+    fill: none;
+    stroke: rgba(255, 140, 66, 0.4);
+    stroke-width: 5;
+    stroke-linecap: round;
+}
+
+.bm-merge-energy {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.6);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-dasharray: 6 16;
+    stroke-dashoffset: 0;
+    animation: bm-flow-energy 1.8s linear infinite;
+}
+
+@keyframes bm-flow-energy {
+    to { stroke-dashoffset: -38; }
+}
+
+/* Arrow connectors */
+.bm-flow-arrow {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 12px;
+    pointer-events: none;
+}
+
+.bm-flow-arrow svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.bm-arrow-line {
+    fill: none;
+    stroke: rgba(255, 140, 66, 0.42);
+    stroke-width: 5;
+    stroke-linecap: round;
+}
+
+.bm-arrow-energy {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.6);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-dasharray: 5 12;
+    stroke-dashoffset: 0;
+    animation: bm-flow-energy 1.8s linear infinite;
+}
+
+.bm-arrow-head {
+    fill: rgba(255, 140, 66, 0.9);
+}
+
+.basics-flow {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.6rem;
+    margin: 1.75rem 0 1rem;
+    padding: 1rem 0;
+}
+
+.basics-line {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    top: 27px;
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255, 140, 66, 0.25), rgba(255, 140, 66, 0.65));
+    pointer-events: none;
+}
+
+.basics-pulse {
+    position: absolute;
+    top: 21px;
+    left: 8%;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 0 6px rgba(255, 140, 66, 0.2);
+    transition: left 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.basics-step {
+    position: relative;
+    z-index: 1;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-light);
+    font-family: var(--font);
+    text-align: center;
+    padding: 0.2rem;
+    transition: color var(--transition), transform var(--transition);
+}
+
+.basics-step:hover {
+    color: var(--text);
+    transform: translateY(-2px);
+}
+
+.basics-step-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 4px solid rgba(255, 140, 66, 0.45);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition), transform var(--transition), background var(--transition);
+}
+
+.basics-step.active .basics-step-dot {
+    border-color: var(--primary);
+    background: #fff3e8;
+    transform: scale(1.1);
+}
+
+.basics-step-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.basics-step-icon {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    transition: color var(--transition), transform var(--transition);
+}
+
+.basics-step-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.basics-step.active .basics-step-icon {
+    color: var(--primary-dark);
+    transform: scale(1.06);
+}
+
+.basics-step.active .basics-step-label {
+    color: var(--primary-dark);
+}
+
+.basics-panel {
+    margin-top: 1.5rem;
+    padding: 1.6rem 1.7rem;
+    border-radius: var(--radius);
+    background: var(--bg-warm);
+    border-left: 4px solid var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.basics-panel h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.basics-panel p {
+    color: var(--text-light);
+}
+
+.basics-panel-note {
+    margin-top: 0.65rem;
+    font-size: 0.92rem;
+}
+
+.basics-facts-heading {
+    margin-top: 2.5rem;
+    margin-bottom: 0.2rem;
+    font-size: 1.15rem;
+    text-align: center;
+    color: var(--heading);
+    font-weight: 600;
+}
+
+.basics-accordion {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    max-width: 740px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.basics-acc-item {
+    background: var(--white);
+    border: 1px solid #f2e7dc;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.basics-acc-item.open {
+    border-color: var(--primary-light);
+    box-shadow: 0 4px 16px rgba(255, 140, 66, 0.1);
+}
+
+.basics-acc-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    text-align: left;
+    line-height: 1.35;
+    transition: color var(--transition);
+}
+
+.basics-acc-toggle:hover {
+    color: var(--primary-dark);
+}
+
+.basics-acc-chevron {
+    flex-shrink: 0;
+    stroke: var(--primary);
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.basics-acc-item.open .basics-acc-chevron {
+    transform: rotate(180deg);
+}
+
+.basics-acc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0 1.2rem;
+}
+
+.basics-acc-item.open .basics-acc-body {
+    padding: 0 1.2rem 1.1rem;
+}
+
+.basics-acc-body p {
+    color: var(--text-light);
+    font-size: 0.93rem;
+    line-height: 1.65;
+}
+
 @keyframes trust-marquee {
     0% {
         transform: translateX(0);
@@ -670,7 +1122,7 @@ a.hero-pill {
 @media (prefers-reduced-motion: reduce) {
     /*
      * Eén rij (geen wrap): anders vallen de twee gekopieerde helften onder elkaar als “twee banen”.
-     * Langzamere loop i.p.v. stilstand — nog steeds rustiger dan de standaard 50s.
+     * Langzamere loop i.p.v. stilstand - nog steeds rustiger dan de standaard 50s.
      */
     .trust-marquee-track {
         animation: trust-marquee 120s linear infinite;
@@ -1843,6 +2295,24 @@ a.hero-pill {
 
 /* Tablet */
 @media (max-width: 1024px) {
+    .bm-train {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 0.5rem;
+    }
+
+    .bm-node { width: 130px; min-width: 110px; }
+    .bm-node.bm-wide { width: 140px; }
+    .bm-inputs { width: 130px; }
+    .bm-flow-merge { width: 36px; }
+    .bm-flow-arrow { width: 28px; }
+
+    .basics-flow {
+        grid-template-columns: repeat(5, minmax(100px, 1fr));
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+
     .steps-flow-wave {
         max-width: 100%;
     }
@@ -2000,6 +2470,88 @@ a.hero-pill {
     .flow-link .flow-svg {
         width: 100%;
         height: 100%;
+    }
+
+    .masonry-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .basics-accordion {
+        max-width: 100%;
+    }
+
+    .basics-map {
+        display: none;
+    }
+
+    .ai-basics .section-intro {
+        margin-bottom: 1.1rem;
+    }
+
+    .basics-flow {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+        margin-top: 0.25rem;
+    }
+
+    .bm-train {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        overflow: visible;
+    }
+
+    .bm-inputs {
+        flex-direction: row;
+        width: auto;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .bm-inputs .bm-node { width: auto; flex: 1; min-width: 0; }
+
+    .bm-flow-merge {
+        width: 80px;
+        height: 36px;
+        transform: rotate(90deg);
+    }
+
+    .bm-flow-arrow {
+        width: 60px;
+        height: 12px;
+        transform: rotate(90deg);
+    }
+
+    .bm-node { width: auto; max-width: 260px; }
+    .bm-node.bm-wide { width: auto; max-width: 260px; }
+
+    .basics-line,
+    .basics-pulse {
+        display: none;
+    }
+
+    .basics-step {
+        background: var(--bg-warm);
+        border-radius: 12px;
+        border: 1px solid #f2e7dc;
+        padding: 0.75rem 0.85rem;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 0.7rem;
+        text-align: left;
+    }
+
+    .basics-step-label {
+        font-size: 0.92rem;
+    }
+
+    .basics-step-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .basics-panel {
+        margin-top: 1rem;
     }
 
     .masonry-grid {

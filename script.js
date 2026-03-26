@@ -164,6 +164,150 @@ document.addEventListener('DOMContentLoaded', () => {
         if (el.dataset.target) counterObserver.observe(el);
     });
 
+    // ──────────── AI BASICS FLOW (interactive) ────────────
+    const basicsFlow = document.querySelector('.basics-flow');
+    const basicsSteps = basicsFlow ? basicsFlow.querySelectorAll('.basics-step') : [];
+    const basicsPulse = basicsFlow ? basicsFlow.querySelector('.basics-pulse') : null;
+    const basicsMap = document.getElementById('basics-map');
+    const basicsMapNodes = basicsMap ? basicsMap.querySelectorAll('.bm-node') : [];
+    const basicsTitle = document.querySelector('[data-basics-title]');
+    const basicsBody = document.querySelector('[data-basics-body]');
+    const basicsNote = document.querySelector('[data-basics-note]');
+    let basicsAutoTimer = null;
+    let basicsAutoAdvanceTimer = null;
+    let basicsIndex = 0;
+    let basicsAutoPaused = false;
+    const BASICS_TRAVEL_MS = 4200;
+    const BASICS_STEP_HOLD_MS = 900;
+    const BASICS_LAST_HOLD_MS = 1800;
+    const BASICS_WRAP_TRAVEL_MS = 1500;
+
+    function basicsPulseLeftForIndex(index) {
+        if (!basicsFlow || !basicsPulse || !basicsSteps[index]) return 0;
+        const flowRect = basicsFlow.getBoundingClientRect();
+        const dot = basicsSteps[index].querySelector('.basics-step-dot');
+        const dotRect = (dot || basicsSteps[index]).getBoundingClientRect();
+        const centerX = dotRect.left - flowRect.left + (dotRect.width / 2);
+        return Math.max(0, centerX - (basicsPulse.offsetWidth / 2));
+    }
+
+    function moveBasicsPulseTo(index, options) {
+        if (!basicsPulse) return;
+        const instant = !!(options && options.instant);
+        const durationMs = (options && options.durationMs) || BASICS_TRAVEL_MS;
+        basicsPulse.style.animation = 'none';
+        basicsPulse.style.opacity = '1';
+        basicsPulse.style.transition = instant ? 'none' : ('left ' + durationMs + 'ms linear');
+        basicsPulse.style.left = basicsPulseLeftForIndex(index) + 'px';
+    }
+
+    function setBasicsStep(stepId, options) {
+        if (!basicsSteps.length || !basicsTitle || !basicsBody || !basicsNote) return;
+        basicsSteps.forEach((btn, i) => {
+            const active = btn.dataset.step === stepId;
+            btn.classList.toggle('active', active);
+            btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+            if (active) basicsIndex = i;
+        });
+
+        basicsTitle.textContent = tr('basics.' + stepId + '.title');
+        basicsBody.textContent = tr('basics.' + stepId + '.body');
+        basicsNote.textContent = tr('basics.' + stepId + '.note');
+        if (basicsMap) {
+            basicsMap.setAttribute('data-active-step', stepId);
+            basicsMapNodes.forEach(node => {
+                const active = node.dataset.step === stepId;
+                node.classList.toggle('active', active);
+                node.setAttribute('aria-pressed', active ? 'true' : 'false');
+            });
+        }
+        moveBasicsPulseTo(basicsIndex, options || { durationMs: 900 });
+    }
+
+    function clearBasicsAutoTimers() {
+        if (basicsAutoTimer) clearTimeout(basicsAutoTimer);
+        if (basicsAutoAdvanceTimer) clearTimeout(basicsAutoAdvanceTimer);
+        basicsAutoTimer = null;
+        basicsAutoAdvanceTimer = null;
+    }
+
+    function runBasicsAutoCycle() {
+        if (basicsAutoPaused || !basicsSteps.length || !basicsPulse) return;
+        const current = basicsIndex;
+        const next = (current + 1) % basicsSteps.length;
+        const isWrap = current === basicsSteps.length - 1 && next === 0;
+        const travelMs = isWrap ? BASICS_WRAP_TRAVEL_MS : BASICS_TRAVEL_MS;
+        const startDelay = current === basicsSteps.length - 1 ? BASICS_LAST_HOLD_MS : BASICS_STEP_HOLD_MS;
+
+        basicsAutoTimer = setTimeout(() => {
+            if (basicsAutoPaused) return;
+            moveBasicsPulseTo(next, { durationMs: travelMs });
+            basicsAutoAdvanceTimer = setTimeout(() => {
+                if (basicsAutoPaused) return;
+                setBasicsStep(basicsSteps[next].dataset.step, { instant: true });
+                runBasicsAutoCycle();
+            }, travelMs + 30);
+        }, startDelay);
+    }
+
+    if (basicsSteps.length && basicsTitle && basicsBody && basicsNote) {
+        basicsSteps.forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                basicsAutoPaused = true;
+                clearBasicsAutoTimers();
+                basicsIndex = i;
+                setBasicsStep(btn.dataset.step, { durationMs: 900 });
+            });
+        });
+        basicsMapNodes.forEach(node => {
+            node.addEventListener('click', () => {
+                basicsAutoPaused = true;
+                clearBasicsAutoTimers();
+                const stepId = node.dataset.step;
+                const matchIdx = Array.from(basicsSteps).findIndex(s => s.dataset.step === stepId);
+                if (matchIdx >= 0) basicsIndex = matchIdx;
+                setBasicsStep(stepId, { durationMs: 900 });
+            });
+        });
+
+        const activeStep = basicsFlow.querySelector('.basics-step.active');
+        setBasicsStep(activeStep ? activeStep.dataset.step : basicsSteps[0].dataset.step, { instant: true });
+        runBasicsAutoCycle();
+
+        window.addEventListener('resize', () => {
+            moveBasicsPulseTo(basicsIndex, { instant: true });
+        });
+
+        document.addEventListener('aa-i18n-applied', () => {
+            const current = basicsSteps[basicsIndex] ? basicsSteps[basicsIndex].dataset.step : basicsSteps[0].dataset.step;
+            setBasicsStep(current, { instant: true });
+        });
+    }
+
+    // ──────────── ACCORDION: "Goed om te weten" ────────────
+    document.querySelectorAll('.basics-acc-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.basics-acc-item');
+            const body = item.querySelector('.basics-acc-body');
+            const isOpen = item.classList.contains('open');
+
+            if (isOpen) {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                requestAnimationFrame(() => { body.style.maxHeight = '0'; });
+                item.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                item.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+                body.addEventListener('transitionend', function handler() {
+                    if (item.classList.contains('open')) body.style.maxHeight = 'none';
+                    body.removeEventListener('transitionend', handler);
+                });
+            }
+        });
+    });
+
     // ──────────── TESTIMONIAL SLIDER ────────────
     const slidesWrapper = document.querySelector('.testimonial-slides-wrapper');
     const slides = slidesWrapper ? slidesWrapper.querySelectorAll('.testimonial-slide') : [];
@@ -561,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-/* Vóór script’s eigen DOMContentLoaded kan i18n al aa-i18n-applied sturen — listener daarom top-level. */
+/* Vóór script’s eigen DOMContentLoaded kan i18n al aa-i18n-applied sturen - listener daarom top-level. */
 document.addEventListener('aa-i18n-applied', () => {
     const I = window.AA_I18N;
     if (!I) return;
