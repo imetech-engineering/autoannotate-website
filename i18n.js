@@ -8,6 +8,8 @@
         nl: {
             'meta.title': 'AutoAnnotate – Maak AI training data snel, accuraat en schaalbaar.',
             'meta.desc': 'AutoAnnotate helpt teams om data te labelen, controleren en verbeteren met AI tools. Lokaal, privacy by design.',
+            'meta.notFoundTitle': 'Pagina niet gevonden – AutoAnnotate',
+            'meta.notFoundDesc': 'Deze URL bestaat niet. Ga verder op de homepage voor AutoAnnotate.',
 
             'nav.product': 'Product',
             'nav.why': 'Waarom wij',
@@ -239,6 +241,8 @@
         en: {
             'meta.title': 'Fast, accurate, scalable AI training data',
             'meta.desc': 'AutoAnnotate helps teams label, check, and improve data with AI tools. Local, privacy by design.',
+            'meta.notFoundTitle': 'Page not found – AutoAnnotate',
+            'meta.notFoundDesc': 'This page does not exist. Continue from the AutoAnnotate homepage.',
 
             'nav.product': 'Product',
             'nav.why': 'Why us',
@@ -531,16 +535,19 @@
             if (key) el.setAttribute('aria-label', t(lang, key));
         });
 
+        var isNotFound = document.body && document.body.hasAttribute('data-aa-not-found');
+        var titleKey = isNotFound ? 'meta.notFoundTitle' : 'meta.title';
+        var descKey = isNotFound ? 'meta.notFoundDesc' : 'meta.desc';
         var mt = document.getElementById('meta-title');
         var md = document.getElementById('meta-desc');
-        if (mt) mt.textContent = t(lang, 'meta.title');
-        if (md) md.setAttribute('content', t(lang, 'meta.desc'));
-        document.title = t(lang, 'meta.title');
+        if (mt) mt.textContent = t(lang, titleKey);
+        if (md) md.setAttribute('content', t(lang, descKey));
+        document.title = t(lang, titleKey);
 
         var og = document.querySelector('meta[property="og:title"]');
-        if (og) og.setAttribute('content', t(lang, 'meta.title'));
+        if (og) og.setAttribute('content', t(lang, titleKey));
         var ogd = document.querySelector('meta[property="og:description"]');
-        if (ogd) ogd.setAttribute('content', t(lang, 'meta.desc'));
+        if (ogd) ogd.setAttribute('content', t(lang, descKey));
 
         document.querySelectorAll('.lang-btn').forEach(function (b) {
             b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false');

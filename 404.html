@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title id="meta-title">AutoAnnotate – Maak AI training data snel, accuraat en schaalbaar.</title>
     <meta id="meta-desc" name="description" content="AutoAnnotate helpt teams om data te labelen, controleren en verbeteren met AI tools. Lokaal, privacy by design.">
     <meta name="keywords" content="AutoAnnotate, sensor data, labeling, annotatie, AI, machine learning, robots, zorg, retail">
@@ -20,7 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
     <link rel="stylesheet" href="/style.css">
 </head>
-<body>
+<body data-aa-not-found>
     <div id="scroll-progress" aria-hidden="true"></div>
 
     <nav class="navbar" id="navbar">
@@ -70,12 +71,133 @@
         </div>
     </section>
 
+    <section class="ai-basics" id="ai-basics">
+        <div class="container">
+            <div class="section-headline reveal">
+                <h2 data-i18n="basics.title">Hoe AI leert in 5 simpele stappen</h2>
+            </div>
+            <p class="section-intro centered reveal narrow" data-i18n="basics.intro">Klik op een stap en zie wat er gebeurt: van losse sensordata naar een model dat zelf labels kan voorspellen.</p>
+            <div class="basics-map reveal" id="basics-map" data-active-step="sensor">
+                <div class="bm-phase bm-train">
+                    <div class="bm-inputs">
+                        <button type="button" class="bm-node active" data-step="sensor" aria-pressed="true">
+                            <span class="bm-node-title" data-i18n="basics.map.sensor">Sensordata</span>
+                            <span class="bm-node-chart" aria-hidden="true">
+                                <svg viewBox="0 0 120 48"><path d="M4 38 C16 14 32 44 48 24 S76 14 92 30 S108 38 116 18"/><circle cx="48" cy="24" r="2.5"/><circle cx="92" cy="30" r="2.5"/></svg>
+                            </span>
+                        </button>
+                        <span class="bm-plus" aria-hidden="true">+</span>
+                        <button type="button" class="bm-node" data-step="labels" aria-pressed="false">
+                            <span class="bm-node-title" data-i18n="basics.map.labels">Labels</span>
+                            <span class="bm-tags" aria-hidden="true"><span>loopt</span><span>valt</span><span>zit</span></span>
+                        </button>
+                    </div>
+                    <div class="bm-flow-merge" aria-hidden="true">
+                        <svg viewBox="0 0 56 120" preserveAspectRatio="none">
+                            <path class="bm-merge-line" d="M0 28 C28 28 28 60 56 60"/>
+                            <path class="bm-merge-line" d="M0 92 C28 92 28 60 56 60"/>
+                            <path class="bm-merge-energy" d="M0 28 C28 28 28 60 56 60"/>
+                            <path class="bm-merge-energy" d="M0 92 C28 92 28 60 56 60"/>
+                        </svg>
+                    </div>
+                    <button type="button" class="bm-node bm-wide" data-step="gelabeld" aria-pressed="false">
+                        <span class="bm-node-title" data-i18n="basics.map.gelabeld">Gelabelde data</span>
+                        <span class="bm-node-chart labeled" aria-hidden="true">
+                            <svg viewBox="0 0 120 48"><path d="M4 38 C16 14 32 44 48 24 S76 14 92 30 S108 38 116 18"/><rect x="38" y="6" width="32" height="14" rx="4"/><text x="54" y="16" text-anchor="middle" font-size="8" fill="#7a4f2e" stroke="none">loopt</text></svg>
+                        </span>
+                    </button>
+                    <div class="bm-flow-arrow" aria-hidden="true">
+                        <svg viewBox="0 0 40 12"><path class="bm-arrow-line" d="M0 6 L32 6"/><path class="bm-arrow-energy" d="M0 6 L32 6"/><polygon class="bm-arrow-head" points="30,2 38,6 30,10"/></svg>
+                    </div>
+                    <button type="button" class="bm-node" data-step="training" aria-pressed="false">
+                        <span class="bm-node-title" data-i18n="basics.map.training">Training</span>
+                        <span class="bm-node-stack" aria-hidden="true">
+                            <svg viewBox="0 0 80 48"><rect x="10" y="4" width="60" height="10" rx="3"/><rect x="4" y="19" width="72" height="10" rx="3"/><rect x="14" y="34" width="52" height="10" rx="3"/></svg>
+                        </span>
+                    </button>
+                    <div class="bm-flow-arrow" aria-hidden="true">
+                        <svg viewBox="0 0 40 12"><path class="bm-arrow-line" d="M0 6 L32 6"/><path class="bm-arrow-energy" d="M0 6 L32 6"/><polygon class="bm-arrow-head" points="30,2 38,6 30,10"/></svg>
+                    </div>
+                    <button type="button" class="bm-node bm-model" data-step="uitkomst" aria-pressed="false">
+                        <span class="bm-node-title" data-i18n="basics.map.model">Model</span>
+                        <span class="bm-model-badge" aria-hidden="true">AI</span>
+                    </button>
+                </div>
+            </div>
+            <div class="basics-flow reveal">
+                <div class="basics-line" aria-hidden="true"></div>
+                <div class="basics-pulse" aria-hidden="true"></div>
+                <button type="button" class="basics-step active" data-step="sensor" aria-pressed="true">
+                    <span class="basics-step-dot"></span>
+                    <span class="basics-step-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M5 19l1.5-1.5"/></svg>
+                    </span>
+                    <span class="basics-step-label" data-i18n="basics.step.sensor">Sensor-data</span>
+                </button>
+                <button type="button" class="basics-step" data-step="labels" aria-pressed="false">
+                    <span class="basics-step-dot"></span>
+                    <span class="basics-step-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M20 10l-8.5 8.5a2 2 0 0 1-2.8 0L2 12V4h8l10 6z"/><circle cx="6.5" cy="7.5" r="1.2"/></svg>
+                    </span>
+                    <span class="basics-step-label" data-i18n="basics.step.labels">Labels</span>
+                </button>
+                <button type="button" class="basics-step" data-step="gelabeld" aria-pressed="false">
+                    <span class="basics-step-dot"></span>
+                    <span class="basics-step-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M3 8h7"/><path d="M3 12h7"/><path d="M3 16h7"/><path d="M14 12h7"/><path d="M12 8v8"/><circle cx="12" cy="12" r="2"/></svg>
+                    </span>
+                    <span class="basics-step-label" data-i18n="basics.step.gelabeld">Samen brengen</span>
+                </button>
+                <button type="button" class="basics-step" data-step="training" aria-pressed="false">
+                    <span class="basics-step-dot"></span>
+                    <span class="basics-step-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="4" rx="1.3"/><rect x="6" y="10.5" width="12" height="4" rx="1.3"/><rect x="8" y="16" width="8" height="3.5" rx="1.3"/></svg>
+                    </span>
+                    <span class="basics-step-label" data-i18n="basics.step.training">Model trainen</span>
+                </button>
+                <button type="button" class="basics-step" data-step="uitkomst" aria-pressed="false">
+                    <span class="basics-step-dot"></span>
+                    <span class="basics-step-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m9.2 12.2 1.8 1.8 3.8-3.8"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+                    </span>
+                    <span class="basics-step-label" data-i18n="basics.step.uitkomst">Model voorspelt</span>
+                </button>
+            </div>
+            <div class="basics-panel reveal" id="basics-panel">
+                <h3 data-basics-title data-i18n="basics.sensor.title">Stap 1: Sensor-data komt binnen</h3>
+                <p data-basics-body data-i18n="basics.sensor.body">Denk aan losse cijfers zoals beweging, druk of afstand. Op zichzelf zegt dat nog niet duidelijk wat er echt gebeurt.</p>
+                <p class="basics-panel-note" data-basics-note data-i18n="basics.sensor.note">Voorbeeld: 0.43, 0.51, 0.49... alleen getallen, nog geen betekenis.</p>
+            </div>
+            <h3 class="basics-facts-heading reveal" data-i18n="basics.facts.heading">Goed om te weten</h3>
+            <div class="basics-accordion reveal">
+                <div class="basics-acc-item">
+                    <button type="button" class="basics-acc-toggle" aria-expanded="false">
+                        <span data-i18n="basics.explain.model.title">Modellen: wat zijn het en waar kom je ze tegen?</span>
+                        <svg class="basics-acc-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="basics-acc-body">
+                        <p data-i18n="basics.explain.model.body">Een AI-model is een rekenprogramma dat patronen leert uit voorbeelden. Denk aan spraakherkenning in je telefoon, spamfilters in je mail, navigatie-apps die files voorspellen, of slimme camera's die inbrekers herkennen. Al die toepassingen draaien op zo'n model. Er bestaan er wereldwijd miljoenen &#x2014; ook met sensordata, zoals AutoAnnotate doet.</p>
+                    </div>
+                </div>
+                <div class="basics-acc-item">
+                    <button type="button" class="basics-acc-toggle" aria-expanded="false">
+                        <span data-i18n="basics.explain.labels.title">Waarom labels zo belangrijk zijn</span>
+                        <svg class="basics-acc-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="basics-acc-body">
+                        <p data-i18n="basics.explain.labels.body">Misschien kent u ChatGPT: dat leert van tekst en geeft antwoorden in taal. Maar een model dat sensordata moet begrijpen, heeft andere voorbeelden nodig: gelabelde momenten. Een label is een korte omschrijving van wat er op dat moment gebeurt, zoals &#x201C;persoon loopt&#x201D; of &#x201C;deur gaat open&#x201D;. Zonder die labels kan het model niet leren wat de data betekent. Hoe meer goede labels, hoe slimmer het model wordt.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="probleem" id="probleem">
         <div class="container">
             <div class="section-headline reveal">
-                <h2 data-i18n="problem.headline">Handmatig labelen kost weken en fouten</h2>
+                <h2 data-i18n="problem.headline">Veel teams lopen hier tegenaan</h2>
             </div>
-            <p class="section-intro reveal" data-i18n="problem.intro">Slimme apparaten leren van voorbeelden. Sensoren geven alleen cijfers of trillingen; daaruit is niet meteen duidelijk wat er echt gebeurde. Daarom moet u labelen: korte omschrijvingen toevoegen, zoals “iemand pakt een object”. Veel teams zetten die labels nu met de hand bij elk moment in beeld. Dat kost veel tijd en groeit niet mee. AutoAnnotate werkt met behulp van camera's en koppelt het beeld automatisch aan uw metingen.</p>
+            <p class="section-intro reveal" data-i18n="problem.intro">De meeste organisaties die met sensoren werken, labelen hun data nog met de hand. Dat is tijdrovend, duur en foutgevoelig.</p>
             <div class="probleem-grid">
                 <div class="probleem-image reveal-left">
                     <img src="/images/photo-problem.png" alt="" loading="lazy" width="600" height="450">
@@ -85,21 +207,21 @@
                         <div class="pain-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
                         <div class="pain-text">
                             <h3 data-i18n="problem.p1t">Tijd</h3>
-                            <p data-i18n="problem.p1b">Zelf alles invoeren kost weken tot maanden, uw mensen blijven hangen in herhaalwerk.</p>
+                            <p data-i18n="problem.p1b">Handmatig labelen kost weken tot maanden. Uw team blijft hangen in herhaalwerk in plaats van vooruit te komen.</p>
                         </div>
                     </div>
                     <div class="pain-point" data-delay="0.15">
                         <div class="pain-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="3"/></svg></div>
                         <div class="pain-text">
                             <h3 data-i18n="problem.p2t">Kosten</h3>
-                            <p data-i18n="problem.p2b">U betaalt veel als u het uitbesteedt, of u moet eigen mensen fulltime laten doorwerken.</p>
+                            <p data-i18n="problem.p2b">Uitbesteden is duur. Zelf doen kost uw mensen fulltime werk dat eigenlijk niet bij hun rol hoort.</p>
                         </div>
                     </div>
                     <div class="pain-point" data-delay="0.3">
                         <div class="pain-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
                         <div class="pain-text">
                             <h3 data-i18n="problem.p3t">Kwaliteit</h3>
-                            <p data-i18n="problem.p3b">De ene medewerker noteert net iets anders dan de andere, dat maakt het resultaat minder betrouwbaar.</p>
+                            <p data-i18n="problem.p3b">Iedereen schrijft het net even anders op. Dat geeft wisselende labels, en een model dat daarvan leert wordt minder betrouwbaar.</p>
                         </div>
                     </div>
                     <div class="counter-row">
@@ -115,7 +237,7 @@
     <section class="oplossing" id="oplossing">
         <div class="container">
             <div class="section-headline reveal">
-                <h2><span data-i18n="solution.headline">4 simpele stappen</span></h2>
+                <h2><span data-i18n="solution.headline">Zo werkt AutoAnnotate</span></h2>
             </div>
             <div class="oplossing-visual reveal-scale">
                 <img src="/images/photo-solution.png" alt="" loading="lazy" width="800" height="450" class="oplossing-hero-img">
@@ -125,7 +247,7 @@
                     <div class="step-card step-1" data-delay="0">
                         <div class="step-number">1</div>
                         <h3 data-i18n="solution.s1t">Opnemen</h3>
-                        <p data-i18n="solution.s1b">Met behulp van camera's en uw sensoren nemen we beeld en metingen op één tijdlijn op.</p>
+                        <p data-i18n="solution.s1b">Met camera's naast uw sensoren worden beeld en metingen tegelijk opgenomen, op één tijdlijn.</p>
                     </div>
                     <div class="flow-link flow-link-12" aria-hidden="true">
                         <svg class="flow-svg" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -142,7 +264,7 @@
                     <div class="step-card step-2" data-delay="0.15">
                         <div class="step-number">2</div>
                         <h3 data-i18n="solution.s2t">Herkennen</h3>
-                        <p data-i18n="solution.s2b">De software ziet op het beeld wat er gebeurt: mensen, voorwerpen en handelingen.</p>
+                        <p data-i18n="solution.s2b">De software herkent op het beeld wat er gebeurt: een persoon, een gebaar, een handeling.</p>
                     </div>
                     <div class="flow-link flow-link-23" aria-hidden="true">
                         <svg class="flow-svg" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -159,7 +281,7 @@
                     <div class="step-card step-3" data-delay="0.3">
                         <div class="step-number">3</div>
                         <h3 data-i18n="solution.s3t">Koppelen</h3>
-                        <p data-i18n="solution.s3b">Wat er op het beeld gebeurt, wordt automatisch gekoppeld aan de metingen op hetzelfde moment.</p>
+                        <p data-i18n="solution.s3b">Wat de camera ziet, wordt automatisch gekoppeld aan de sensordata van datzelfde moment.</p>
                     </div>
                     <div class="flow-link flow-link-34" aria-hidden="true">
                         <svg class="flow-svg" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -176,7 +298,7 @@
                     <div class="step-card step-4" data-delay="0.45">
                         <div class="step-number">4</div>
                         <h3 data-i18n="solution.s4t">Exporteren</h3>
-                        <p data-i18n="solution.s4b">U haalt de gelabelde data uit het systeem in gangbare vormen, klaar om uw systeem te trainen.</p>
+                        <p data-i18n="solution.s4b">U exporteert de gelabelde data in gangbare formaten, klaar om uw model te trainen.</p>
                     </div>
                 </div>
             </div>
@@ -188,7 +310,7 @@
             <div class="section-headline reveal">
                 <h2 data-i18n="why.title">Handmatig vs <span>AutoAnnotate</span></h2>
             </div>
-            <p class="section-intro centered reveal narrow" data-i18n="why.intro" style="margin-bottom: 2rem;">Handwerk kost vaak veel tijd en geld, en de ene persoon noteert net iets anders dan de andere. Hier ziet u het verschil met AutoAnnotate.</p>
+            <p class="section-intro centered reveal narrow" data-i18n="why.intro" style="margin-bottom: 2rem;">Wat levert AutoAnnotate concreet op ten opzichte van handmatig labelen?</p>
             <div class="compare-grid">
                 <div class="compare-card reveal" data-delay="0">
                     <div class="compare-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
@@ -326,14 +448,14 @@
                     <a href="tel:+31612385439" class="team-phone">+31 6 12385439</a>
                 </div>
                 <div class="team-card team-gsap">
-                    <div class="team-card-link">
+                    <a href="https://www.linkedin.com/in/jackie-oostendorp-05a1311b6/" class="team-card-link" target="_blank" rel="noopener noreferrer" data-i18n-aria="team.jackie.linkedinAria">
                         <div class="team-photo-wrap">
                             <img src="/images/Jackie_Oostendorp.webp" alt="" loading="lazy" decoding="async" width="200" height="200">
                         </div>
                         <h3 class="team-name">Jackie Oostendorp</h3>
                         <p class="team-role" data-i18n="team.jackie.role">Vormgeving &amp; administratie AutoAnnotate</p>
                         <p class="team-bio" data-i18n="team.jackie.bio">Vormgeving en administratie bij AutoAnnotate. Creatief en scherp. Zorgt voor heldere communicatie en overzicht in de organisatie.</p>
-                    </div>
+                    </a>
                 </div>
                 <div class="team-card team-gsap">
                     <a href="https://www.linkedin.com/in/rickspaan/" class="team-card-link" target="_blank" rel="noopener noreferrer" data-i18n-aria="team.rick.linkedinAria">
@@ -343,6 +465,16 @@
                         <h3 class="team-name">Rick Spaan</h3>
                         <p class="team-role" data-i18n="team.rick.role">Adviseur · podiumkunsten &amp; organisatie</p>
                         <p class="team-bio" data-i18n="team.rick.bio">Ruim twintig jaar ervaring in de podiumkunsten: strategie, financiën en communicatie bij toonaangevende gezelschappen. Adviseur voor AutoAnnotate.</p>
+                    </a>
+                </div>
+                <div class="team-card team-gsap">
+                    <a href="https://www.linkedin.com/in/markkempkes/" class="team-card-link" target="_blank" rel="noopener noreferrer" data-i18n-aria="team.mark.linkedinAria">
+                        <div class="team-photo-wrap">
+                            <img src="/images/Mark_Kempes.jpg" alt="" loading="lazy" decoding="async" width="200" height="200">
+                        </div>
+                        <h3 class="team-name">Mark Kempkes, Drs.</h3>
+                        <p class="team-role" data-i18n="team.mark.role">Adviseur digitale transformatie</p>
+                        <p class="team-bio" data-i18n="team.mark.bio">Meer dan 30 jaar ervaring in digitale en bedrijfstransformatie, in diverse sectoren. Zowel vanuit consultancy als in de rol van directeur van bedrijfsonderdelen.</p>
                     </a>
                 </div>
             </div>
